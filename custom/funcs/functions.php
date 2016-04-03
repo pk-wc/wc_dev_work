@@ -42,7 +42,6 @@ function closeDB($c){
 }
 
 function generateLog($info){
-	echo $info;
 	$today = date("d-m-Y");
 	$fpath = "/home/wecarysa/public_html/dev_work/log_info/".$today.".txt";
 	if(!fopen($fpath, 'r')){
