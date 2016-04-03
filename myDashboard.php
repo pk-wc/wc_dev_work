@@ -111,12 +111,16 @@ if($wc_uid){
 	echo '							</form>';
 	echo '						</div>';
 	if($input_order_source_pincode_search || $input_order_destination_pincode_search){
-	$q = "select a.order_id,a.pickup_address_id,a.delivery_address_id,a.delivery_date,a.headline,a.weight,a.price,a.notes,a.posted_on,a.timestamp from (select * from orders where pickup_address_id in (select address_id from address where ".
-		 	 "pincode like '".$input_order_source_pincode_search."%') and order_id in (select order_id from order_sender where user_id!='$wc_uid') and order_id not in (select order_id from requests where status_id not in (select status_id from status where status='in-progress'))) a join ".
-			 "(select * from orders where delivery_address_id in (select address_id from address where ".
-		 	 "pincode like '".$input_order_destination_pincode_search."%') and order_id in (select order_id from order_sender where user_id!='$wc_uid') and order_id not in (select order_id from requests where status_id not in (select status_id from status where status='in-progress'))) b on a.order_id = b.order_id";
+		$q = "select a.order_id,a.pickup_address_id,a.delivery_address_id,a.delivery_date,a.headline,a.weight,a.price,a.notes,a.posted_on,a.timestamp ".
+		 	 "from (select * from orders where pickup_address_id in (select address_id from address where pincode like '".
+		 	 $input_order_source_pincode_search."%') and order_id in (select order_id from order_sender where user_id!='$wc_uid') and order_id not in ".
+			 "(select order_id from requests where status_id not in (select status_id from status where status='in-progress'))) where a.delivery_date >= '".date('Y-m-d')."' a join ".
+			 "(select * from orders where delivery_address_id in (select address_id from address where pincode like '".
+			 $input_order_destination_pincode_search."%') and order_id in (select order_id from order_sender where user_id!='$wc_uid') and order_id not ".
+			 "in (select order_id from requests where status_id not in (select status_id from status where status='in-progress'))) b on a.order_id = b.order_id";
 	}else{
-		$q = "select * from orders where order_id in (select order_id from order_sender where user_id!='$wc_uid') and order_id not in (select order_id from requests where status_id not in (select status_id from status where status='in-progress'))";
+		$q = "select * from orders where order_id in (select order_id from order_sender where user_id!='$wc_uid') and order_id not in ".
+			 "(select order_id from requests where status_id not in (select status_id from status where status='in-progress')) and delivery_date >= '".date('Y-m-d')."'";
 	}
 	$res = runQuery($q);
 	if($res && mysqli_num_rows($res)){
@@ -214,11 +218,18 @@ if($wc_uid){
 	echo '							</form>';
 	echo '						</div>';
 	if($input_journey_source_pincode_search || $input_journey_destination_pincode_search){
-	$q = "select a.journey_id,a.source_address_id,a.destination_address_id,a.journey_date,a.headline,a.notes,a.posted_on,a.timestamp from (select * from journeys where source_address_id in (select address_id from address where "."pincode like '".$input_journey_source_pincode_search."%') and journey_id in (select journey_id from carrier_journeys where user_id!='$wc_uid') and journey_id not in (select journey_id from requests where status_id not in (select status_id from status where status='in-progress'))) a join ".
-			 "(select * from journeys where destination_address_id in (select address_id from address where ".
-		 	 "pincode like '".$input_journey_destination_pincode_search."%') and journey_id in (select journey_id from carrier_journeys where user_id!='$wc_uid') and journey_id not in (select journey_id from requests where status_id not in (select status_id from status where status='in-progress'))) b on a.journey_id = b.journey_id";
+		$q = "select a.journey_id,a.source_address_id,a.destination_address_id,a.journey_date,a.headline,a.notes,a.posted_on,a.timestamp ".
+			 "from (select * from journeys where source_address_id in (select address_id from address where "."pincode like '".
+			 $input_journey_source_pincode_search."%') and journey_id in (select journey_id from carrier_journeys where user_id!='$wc_uid') ".
+			 "and journey_id not in (select journey_id from requests where status_id not in (select status_id from status where status='in-progress'))) ".
+			 "where a.journey_date >= '".date('Y-m-d')."' a join (select * from journeys where destination_address_id in ".
+			 "(select address_id from address where pincode like '".$input_journey_destination_pincode_search."%') and journey_id in ".
+			 "(select journey_id from carrier_journeys where user_id!='$wc_uid') and journey_id not in (select journey_id from requests where status_id ".
+			 "not in (select status_id from status where status='in-progress'))) b on a.journey_id = b.journey_id";
 	}else{
-	$q = "select * from journeys where journey_id in (select journey_id from carrier_journeys where user_id!='$wc_uid') and journey_id not in (select journey_id from requests where status_id not in (select status_id from status where status='in-progress'))";
+		$q = "select * from journeys where journey_id in (select journey_id from carrier_journeys where user_id!='$wc_uid') and journey_id not in ".
+			 "(select journey_id from requests where status_id not in (select status_id from status where status='in-progress')) and journey_date >= '".
+			 date('Y-m-d')."'";
 	}
 	$res = runQuery($q);
 	if($res && mysqli_num_rows($res)){

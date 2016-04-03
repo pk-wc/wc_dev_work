@@ -97,7 +97,7 @@ if($wc_uid){
 	}
 
 	if(strlen($page_message) > 0){
-		//generateLog($page_message);
+		generateLog($page_message);
 		setPageErrorMessage($page_message);
 	}else{
 		$page_message = buildMessage("Success!", "Your request has been posted successfully");

@@ -5,7 +5,7 @@ function runQuery($str){
   
   $fres = mysqli_query($con,$str);
   if(!$fres){
-    generateLog("\nQuery Error! '".$str."'\nDescription: ".mysqli_error($con)."\n");
+    generateLog("Query Error! '".$str."' Description: ".mysqli_error($con));
   }
   
   closeDB($con);
@@ -13,48 +13,48 @@ function runQuery($str){
 }
 
 function connectDB(){
-  generateLog("\n================================== ".date('d-m-Y')." ".date('H:i:s')." ==================================\n");
-  generateLog("Connecting to Database...\n");
+  //generateLog("\n================================== ".date('d-m-Y')." ".date('H:i:s')." ==================================\n");
+  //generateLog("Connecting to Database...\n");
   $dbIP = "localhost";
   $username = "wecarysa";
-  //$password = "we@fun";
   $password = "?4UeY0H9%0%b";
   $dbName = "wecarysa_wecarriers";
   $con = mysqli_connect($dbIP,$username,$password,$dbName);
   if(!$con){
-    generateLog("Connection Error!\nDescription: ".mysqli_connect_error()."\n");
-  }else{
-    generateLog("Connection Established successfully!\n Returning connection string...\n");
-  }
+    generateLog("Connection Error!\nDescription: ".mysqli_connect_error());
+  }/*else{
+    generateLog("Connection Established successfully!\n Returning connection string...");
+  }*/
 
   return $con;
 }
 
 function closeDB($c){
   if($c){
-    generateLog("\nClosing Database connection...\n");
-    if(mysqli_close($c)){
+    //generateLog("\nClosing Database connection...\n");
+    if(!mysqli_close($c)){
+      generateLog("Error while closing database connection\nDescription: ".mysqli_error($c));
+    }/*else{
       generateLog("Database connection closed successfully!\n");
-    }else{
-      generateLog("Error while closing database connection\nDescription: ".mysqli_error($c)."\n");
-    }
-    generateLog("================================================================================\n");
+    }*/
+    //generateLog("================================================================================\n");
   }
 }
 
 function generateLog($info){
-	//echo $info;
-	/*
+	echo $info;
 	$today = date("d-m-Y");
-	$fpath = "log_info/".$today.".txt";
+	$fpath = "/home/wecarysa/public_html/dev_work/log_info/".$today.".txt";
 	if(!fopen($fpath, 'r')){
-		$fh = fopen($fpath, 'w') or die("can't create file: ".$fpath);
+		$fh = fopen($fpath, 'w') or die("Can't log at: ".$fpath);
 		fclose($fh);
-	}else{
-		$fh = fopen($fpath, 'a') or die("can't open file ".$fpath." for appending!!!");
+	}
+	if(fopen($fpath, 'r')){
+		$fh = fopen($fpath, 'a') or die("Can't append at: ".$fpath);
+		$info = "|".date('d-m-Y')."|".date('H:i:s')."|".$info."\n";
 		fwrite($fh, $info);
 		fclose($fh);
-	}*/
+	}
 }
 
 function getPageTitle($title){

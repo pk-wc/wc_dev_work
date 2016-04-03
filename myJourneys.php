@@ -73,7 +73,8 @@ if($wc_uid){
 
 	if($eid){
 		$valid_journey = false;
-		$res = runQuery("select * from journeys where journey_id='$eid' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid')");
+		$res = runQuery("select * from journeys where journey_id='$eid' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') ".
+						"and journey_date >= '".date('Y-m-d')."'");
 		if(mysqli_num_rows($res) > 0){
 			$row = mysqli_fetch_array($res);
 			$valid_journey = true;
@@ -237,7 +238,8 @@ if($wc_uid){
 	echo '		<div style="width: 100%;">';
 	echo '			       <div style="border-bottom: 1px solid #fac106; padding-bottom: 2px; font-size: 24px; margin-bottom: 10px;">Journey List</div>';
 	echo '			       <div style="border: 1px solid #009688;border-radius: 0px">';
-	$res = runQuery("select * from journeys where journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') order by journey_date");
+	$res = runQuery("select * from journeys where journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and journey_date >= '".
+					date('Y-m-d')."' order by journey_date desc");
 	if($res && mysqli_num_rows($res)){
 		while($row = mysqli_fetch_array($res)){
 			echo '			<div style="padding: 10px; border-bottom: 1px solid #009688;">';
