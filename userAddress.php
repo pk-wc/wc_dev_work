@@ -26,6 +26,8 @@ if($wc_uid){
     		$input_address_label = mres_ss($_POST['input_address_label']);
 		$input_pincode       = mres_ss($_POST['input_pincode']);
 		$input_address       = mres_ss($_POST['input_address']);
+		$city                = mres_ss($_POST['city']);
+		$state               = mres_ss($_POST['state']);
 		
 		$res = runQuery("select address_id from address where address_label='$input_address_label' and address_id in (select address_id from user_address where user_id='$wc_uid')");
 		
@@ -35,7 +37,7 @@ if($wc_uid){
         		$data["errors"]  = $errors;
 		}else{
 			$con = connectDB();
-			$res = mysqli_query($con, "insert into address (address_label,pincode,address) values ('$input_address_label','$input_pincode','$input_address')");
+			$res = mysqli_query($con, "insert into address (address_label,pincode,address,city,state) values ('$input_address_label','$input_pincode','$input_address','$city','$state')");
 			if(!$res){
 				  $data["success"] = false;
 				  $errors["submit"] = "Server is busy!";

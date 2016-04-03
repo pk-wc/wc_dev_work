@@ -23,12 +23,24 @@ echo '  <body>';
 showHeader("aboutUs");
 loadLoginModal();
 
-echo ' <div id="content">';
-echo ' <div class="container">';
+if($wc_uid){
+	echo '<div class="container" style="margin-top: 50px;">';
+}else{
+	echo '<div class="container" style="margin-top: 50px;">';
+}
 checkPageMessages();
-echo ' </div>';
+echo '    </div>';
 
-echo ' <div class="">';
+if($wc_uid){
+        echo '  <div class="container-fluid">';/*ravi*/
+        echo '  <div class="row">';/*ravi*/
+	showSidebarTop("");
+	echo '<div class="col-sm-9 col-lg-10 col-md-10 col-xs-12 main pull-right">';/*ravi*/
+	
+	
+}else{
+	echo ' <div class="">';
+}
 echo '<div class="row">';
 echo '	<div class="col-md-12">';
 echo ' 	<img src="custom/images/1_b.png" alt="About Us!" class="img-responsive center-block">';
@@ -104,9 +116,19 @@ echo '<section id="what_we_do">
 							
 						</section>
 							 ';
+
+if($wc_uid){
+	showSidebarBottom();
+	
+	echo '</div>';
+	echo '</div>';
+}
+	
+if(!$wc_uid){
+	showFooter();
+}
+
 echo '</div>';
-echo '</div>';
-showFooter();
 loadLaterJSFiles();
 
 echo '  </body>';

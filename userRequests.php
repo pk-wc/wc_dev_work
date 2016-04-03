@@ -31,7 +31,7 @@ if($wc_uid){
 			if(strlen($page_message) > 0){
 				$retLocation = $retLocation."?as_a=carrier&oid=".$order_id;
 			}
-			$loc=carrier;
+			$loc="carrier";
 		}else if(isset($_GET['jid']) && isset($_POST['input_order_id'])){
 			$journey_id = mres_ss($_GET['jid']);
 			$res = runQuery("select * from journeys where journey_id='$journey_id'");
@@ -50,7 +50,7 @@ if($wc_uid){
 			if(strlen($page_message) > 0){
 				$retLocation = $retLocation."?as_a=sender&jid=".$journey_id;
 			}
-			$loc=sender;
+			$loc="sender";
 		}
 
 		if($opValid){
@@ -63,17 +63,17 @@ if($wc_uid){
 					$q = "insert into requests (is_carrier, order_id, journey_id, status_id, posted_on) values ('$is_carrier', '$order_id', '$input_journey_id', '$status_id', '$timestamp')";
 					$res = runQuery($q);
 					if(!$res){
-						$page_message = buildMessage("Operation Failed!", "An error occurred while placing your request ..1..");
+						$page_message = buildMessage("Operation Failed!", "An error occurred while placing your request");
 					}
 				}else{
 					$q = "insert into requests (is_carrier, order_id, journey_id, status_id, posted_on) values ('$is_carrier', '$input_order_id', '$journey_id', '$status_id', '$timestamp')";
 					$res = runQuery($q);
 					if(!$res){
-						$page_message = buildMessage("Operation Failed!", "An error occurred while placing your request ..2..");
+						$page_message = buildMessage("Operation Failed!", "An error occurred while placing your request");
 					}
 				}
 			}else{
-				$page_message = buildMessage("Operation Failed!", "An error occurred while placing your request ..3..");
+				$page_message = buildMessage("Operation Failed!", "An error occurred while placing your request");
 			}
 		}else{
 			if(strlen($page_message) == 0){
@@ -97,7 +97,7 @@ if($wc_uid){
 	}
 
 	if(strlen($page_message) > 0){
-		//generateLog($page_message);
+		generateLog($page_message);
 		setPageErrorMessage($page_message);
 	}else{
 		$page_message = buildMessage("Success!", "Your request has been posted successfully");
@@ -164,6 +164,7 @@ if($wc_uid){
 				generateLog("SMS Failed with Response = ".$sms_res.";Text = ".$sms_txt);
 			}
 			/* Send Email to the Sender */
+			
 		}
 	}
 }

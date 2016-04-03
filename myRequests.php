@@ -76,9 +76,8 @@ echo '  <body>';
 
 showHeader("my_requests");
 loadLoginModal();
-echo ' <div id="content">';
-echo '    <div class="container">';
-checkPageMessages();
+
+echo '    <div class="container" style="margin-top: 50px;">';
 echo '    </div>';
 
 if($wc_uid){
@@ -96,10 +95,13 @@ if($wc_uid){
 		$journey_id = mres_ss($_GET['jid']);
 	}
 	echo '  <div class="container">';/*ravi*/
+	echo '  <div class="row">';/*ravi*/
+	echo '<div class="col-sm-12 col-md-12 col-xs-12 col-lg-12 main" style="padding:0px 10px 0px 10px">';/*ravi*/
 	echo '<h1 class="page-header">My Requests</h1>';
 	echo '	<div style="">';
+	checkPageMessages();
 	if($order_id){
-		$res = runQuery("select * from orders where order_id='$order_id'");
+		$res = runQuery("select * from orders where order_id='$order_id' and delivery_date >= '".date('Y-m-d')."'");
 		if($res && mysqli_num_rows($res)){
 			echo '<div class="row" style="z-index:10;border:1px solid #eee;box-shadow: 0 2px 5px black;border-radius: 5px;margin-bottom:10px;padding-top:10px">';
 			$row = mysqli_fetch_array($res);
@@ -120,11 +122,8 @@ if($wc_uid){
 				echo '				<div style="">';
 				echo '					<label style="width: 30%;">Pickup Address</label>';
 				echo '					<label style="font-weight: normal;">'.$row1['address'].'</label>, ';
-				$pincode = $row1['pincode'];
-				$res2 = runQuery("select * from pincodes where pincode='$pincode'");
-				$row2 = mysqli_fetch_array($res2);
-				echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
-				echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>,
+				echo '					<label style="font-weight: normal;">'.$row1['city'].'</label>, ';
+				echo '					<label style="font-weight: normal;">'.$row1['state'].'</label>,
 									<label style="font-weight: normal;">India</label>';
 				echo '				</div>';
 				echo '				<div style="">';
@@ -138,11 +137,8 @@ if($wc_uid){
 				echo '				<div style="">';
 				echo '					<label style="width: 30%;">Delivery Address</label>';
 				echo '					<label style="font-weight: normal;">'.$row1['address'].'</label>, ';
-				$pincode = $row1['pincode'];
-				$res2 = runQuery("select * from pincodes where pincode='$pincode'");
-				$row2 = mysqli_fetch_array($res2);
-				echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
-				echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>,
+				echo '					<label style="font-weight: normal;">'.$row1['city'].'</label>, ';
+				echo '					<label style="font-weight: normal;">'.$row1['state'].'</label>,
 				                                        <label style="font-weight: normal;">India</label>';
 				echo '				</div>';
 				echo '				<div style="">';
@@ -240,7 +236,7 @@ if($wc_uid){
 			checkPageMessages();
 		}
 	}else if($journey_id){
-		$res = runQuery("select * from journeys where journey_id='$journey_id'");
+		$res = runQuery("select * from journeys where journey_id='$journey_id' and journey_date >= '".date('Y-m-d')."'");
 		if($res && mysqli_num_rows($res)){
 			echo '<div class="row" style="z-index:10;border:1px solid #eee;box-shadow: 0 2px 5px black;border-radius: 5px;margin-bottom:10px;padding-top:10px">';
 			$row = mysqli_fetch_array($res);
@@ -261,11 +257,8 @@ if($wc_uid){
 				echo '				<div style="">';
 				echo '					<label style="width: 30%;">Source Address</label>';
 				echo '					<label style="font-weight: normal;">'.$row1['address'].'</label>, ';
-				$pincode = $row1['pincode'];
-				$res2 = runQuery("select * from pincodes where pincode='$pincode'");
-				$row2 = mysqli_fetch_array($res2);
-				echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
-				echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>,
+				echo '					<label style="font-weight: normal;">'.$row1['city'].'</label>, ';
+				echo '					<label style="font-weight: normal;">'.$row1['state'].'</label>,
 									<label style="font-weight: normal;">India</label>';
 				echo '				</div>';
 				echo '				<div style="">';
@@ -279,11 +272,8 @@ if($wc_uid){
 				echo '				<div style="">';
 				echo '					<label style="width: 30%;">Destination Address</label>';
 				echo '					<label style="font-weight: normal;">'.$row1['address'].'</label>, ';
-				$pincode = $row1['pincode'];
-				$res2 = runQuery("select * from pincodes where pincode='$pincode'");
-				$row2 = mysqli_fetch_array($res2);
-				echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
-				echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>,
+				echo '					<label style="font-weight: normal;">'.$row1['city'].'</label>, ';
+				echo '					<label style="font-weight: normal;">'.$row1['state'].'</label>,
 									<label style="font-weight: normal;">India</label>';
 				echo '				</div>';
 				echo '				<div style="">';
@@ -390,9 +380,9 @@ if($wc_uid){
 	echo '	<div style="border: 1px solid #009688">';
 	echo '		<div style="border-bottom: 1px solid #009688">';
 	echo '			<ul class="nav nav-tabs" role="tablist" style="text-align: center;">';
-	$q = "select * from requests where is_carrier='1' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid')".
+	$q = "select * from requests where is_carrier='1' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."')".
 	     " union ".
-	     "select * from requests where is_carrier='1' and order_id in (select order_id from order_sender where user_id='$wc_uid')";
+	     "select * from requests where is_carrier='1' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."')";
 	$res = runQuery($q);
 	$no_of_requests = 0;
 	if($res){
@@ -410,9 +400,9 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
 
-	$q = "select * from requests where is_carrier='0' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid')".
+	$q = "select * from requests where is_carrier='0' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."')".
 	     " union ".
-	     "select * from requests where is_carrier='0' and order_id in (select order_id from order_sender where user_id='$wc_uid')";
+	     "select * from requests where is_carrier='0' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."')";
 	$res = runQuery($q);
 	$no_of_requests = 0;
 	if($res){
@@ -435,9 +425,9 @@ if($wc_uid){
 	echo '		<div style="border-bottom: 1px solid #009688; padding: 5px 2px 5px 2px;">';
 	echo '			<ul class="nav nav-pills" role="tablist" style="text-align: center;">';
 	
-	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='in-progress')".
+	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='in-progress')".
 	     " union ".
-	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='in-progress')";
+	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='in-progress')";
 	$res = runQuery($q);
 	$no_of_requests = 0;
 	if($res){
@@ -455,9 +445,9 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
     
-    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='accepted')".
+    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='accepted')".
          " union ".
-         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='accepted')";
+         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='accepted')";
     $res = runQuery($q);
     $no_of_requests = 0;
     if($res){
@@ -475,9 +465,9 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
 
-    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='declined')".
+    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='declined')".
          " union ".
-         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='declined')";
+         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='declined')";
     $res = runQuery($q);
     $no_of_requests = 0;
     if($res){
@@ -499,9 +489,9 @@ if($wc_uid){
 	echo '		</div>';
 
 	echo '		<div style="">';
-	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='$status')".
+	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='$status')".
 	     " union ".
-	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='$status')";
+	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='$status')";
 	$res = runQuery($q);
 	if($res && mysqli_num_rows($res)){
 		while($row = mysqli_fetch_array($res)){
@@ -548,12 +538,9 @@ if($wc_uid){
 			echo '					<label style="width: 30%;">Source Address</label>';
 			$res2 = runQuery("select * from address where address_id='".$row1['source_address_id']."'");
 			$row2 = mysqli_fetch_array($res2);
-			$pincode = $row2['pincode'];
-			$res3 = runQuery("select * from pincodes where pincode='$pincode'");
-			$row3 = mysqli_fetch_array($res3);
 			echo '					<label style="font-weight: normal;">'.$row2['address'].'</label>, ';
-			echo '					<label style="font-weight: normal;">'.$row3['city'].'</label>, ';
-			echo '					<label style="font-weight: normal;">'.$row3['state'].'</label>';
+			echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
+			echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>';
 			echo '				</div>';
 			echo '				<div style="">';
 			echo '					<label style="width: 30%;"></label>';
@@ -563,12 +550,9 @@ if($wc_uid){
 			echo '					<label style="width: 30%;">Destination Address</label>';
 			$res2 = runQuery("select * from address where address_id='".$row1['destination_address_id']."'");
 			$row2 = mysqli_fetch_array($res2);
-			$pincode = $row2['pincode'];
-			$res3 = runQuery("select * from pincodes where pincode='$pincode'");
-			$row3 = mysqli_fetch_array($res3);
 			echo '					<label style="font-weight: normal;">'.$row2['address'].'</label>, ';
-			echo '					<label style="font-weight: normal;">'.$row3['city'].'</label>, ';
-			echo '					<label style="font-weight: normal;">'.$row3['state'].'</label>';
+			echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
+			echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>';
 			echo '				</div>';
 			echo '				<div style="">';
 			echo '					<label style="width: 30%;"></label>';
@@ -624,12 +608,9 @@ if($wc_uid){
 			echo '					<label style="width: 30%;">Pickup Address</label>';
 			$res2 = runQuery("select * from address where address_id='".$row1['pickup_address_id']."'");
 			$row2 = mysqli_fetch_array($res2);
-			$pincode = $row2['pincode'];
-			$res3 = runQuery("select * from pincodes where pincode='$pincode'");
-			$row3 = mysqli_fetch_array($res3);
 			echo '					<label style="font-weight: normal;">'.$row2['address'].'</label>, ';
-			echo '					<label style="font-weight: normal;">'.$row3['city'].'</label>, ';
-			echo '					<label style="font-weight: normal;">'.$row3['state'].'</label>';
+			echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>, ';
+			echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>';
 			echo '				</div>';
 			echo '				<div style="">';
 			echo '					<label style="width: 30%;"></label>';
@@ -639,12 +620,9 @@ if($wc_uid){
 			echo '					<label style="width: 30%;">Delivery Address</label>';
 			$res2 = runQuery("select * from address where address_id='".$row1['delivery_address_id']."'");
 			$row2 = mysqli_fetch_array($res2);
-			$pincode = $row2['pincode'];
-			$res3 = runQuery("select * from pincodes where pincode='$pincode'");
-			$row3 = mysqli_fetch_array($res3);
 			echo '					<label style="font-weight: normal;">'.$row2['address'].'</label>';
-			echo '					<label style="font-weight: normal;">'.$row3['city'].'</label>';
-			echo '					<label style="font-weight: normal;">'.$row3['state'].'</label>';
+			echo '					<label style="font-weight: normal;">'.$row2['city'].'</label>';
+			echo '					<label style="font-weight: normal;">'.$row2['state'].'</label>';
 			echo '				</div>';
 			echo '				<div style="">';
 			echo '					<label style="width: 30%;"></label>';
@@ -721,12 +699,14 @@ if($wc_uid){
 	}
 	echo '		</div>';
 	echo '	</div>';
+
+	showSidebarBottom();
+	echo '</div>';
+	echo '</div>';
 	echo '</div>';
 }else{
-header("location: index.php");
+	showFooter();
 }
-echo ' </div>';
-showFooter();
 
 loadLaterJSFiles();
 echo '		<script src="custom/js/jquery/jquery.rateit.js"></script>';

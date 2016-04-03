@@ -22,12 +22,23 @@ echo '  <body>';
 
 showHeader("how_it_works");
 loadLoginModal();
-echo ' <div id="content">';
-echo '<div class="container">';
+
+if($wc_uid){
+	echo '<div class="container" style="margin-top: 50px;">';
+}else{
+	echo '<div class="container" style="margin-top: 50px;">';
+}
 checkPageMessages();
 echo '    </div>';
 
-echo '  <div class="">';
+if($wc_uid){
+	echo '  <div class="container-fluid">';/*ravi*/
+        echo '  <div class="row">';/*ravi*/
+	showSidebarTop("");
+	echo '<div class="col-sm-9 col-md-10 col-xs-12 col-lg-10 main pull-right">';/*ravi*/
+}else{
+	echo '  <div class="">';
+}
 echo '			<div class="row">';
 echo '        <div class="jumbotron" style="margin-bottom:0px">';
 echo '  				<div class="container">';
@@ -41,7 +52,7 @@ echo '			</div>';
 echo '
 			<section id="how_it_works">
 				 <h2 style="margin-bottom: 40px;">HOW IT WORKS?</h2>
-				 	<div class="container">
+				 	<div style="">
 						 <ul class="nav nav-tabs" role="tablist" style="text-align: center;">
 						 	<li role="presentation" style="width: 50%;" class="active"><a aria-controls="wesender" role="tab" data-toggle="tab" href="#wesender">Do You Want to send the Parcel? (Become WeSender)</a></li>
 							<li role="presentation" style="width: 50%;"><a aria-controls="wecarrier" role="tab" data-toggle="tab" href="#wecarrier">Do You Want to carry the Parcel? (Become WeCarrier)</a></li>
@@ -173,9 +184,19 @@ echo '
 			</section>
 ';
 
+
+
+if($wc_uid){
+	showSidebarBottom();
+	echo '</div>';
+	echo '</div>';
+}
 echo '	</div>';
-echo '</div>';
-showFooter();
+if(!$wc_uid){
+	showFooter();
+}
+
+
 loadLaterJSFiles();
 
 echo '  </body>';

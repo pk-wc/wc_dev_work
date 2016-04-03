@@ -6,8 +6,6 @@ require_once("custom/funcs/functions.php");
 $page_message = "";
 $errors         = array();      // array to hold validation errors
 $data           = array();      // array to pass back data 
-$new_user_points = 30;//points added to new user account if referral code is not used
-$old_user_points = 0;
 
 $wc_uid = getSessionUID();
 
@@ -17,7 +15,6 @@ if(!$wc_uid){
 		$input_username   = mres_ss($_POST['input_username']);
 		$input_password   = mres_ss($_POST['input_password']);
 		$input_repassword = mres_ss($_POST['input_repassword']);
-		$code		  = mres_ss($_POST['input_code']);
 
 		$res = runQuery("select mobile_no from users where mobile_no='$input_mobile'");
 		if($res && mysqli_num_rows($res)){
@@ -33,11 +30,6 @@ if(!$wc_uid){
 				$errors["submit"] = "Email Address is already registered!";
 				$data["errors"]  = $errors;
 			}else{
-				if($code)
-				{
-					$new_user_points = 60;//points added to new user account if referral code is correct
-					$old_user_points = 30;//points added to user account whose referral code is used
-				}
 				//$salt = substr(str_replace('+', '.', base64_encode(sha1(microtime(true), true))), 0, 22);
 				//$hash = crypt($input_password, '$2a$12$' . $salt);
 				//$cost = 10;
@@ -54,28 +46,29 @@ if(!$wc_uid){
 				$base10Rand = mt_rand();
 				$newRand = base_convert($base10Rand, 10, 36);
 
+				/* SMS Code generation */
+				$min_range = 1000;
+				$max_range = 9999;
+				$sms_code = rand($min_range, $max_range);
+
 				$con = connectDB();
-				$res = mysqli_query($con,"insert into users (mobile_no,username,password,email_id,email_verify_code,referral_code,points) values ('$input_mobile','$input_username','$hash','$input_email','$newRand','$newRand','$new_user_points')");
+				$res = mysqli_query($con,"insert into users (mobile_no,mobile_no_code,username,password,email_id,email_verify_code) values ('$input_mobile','$sms_code','$input_username','$hash','$input_email','$newRand')");
 				closeDB($con);
 				if(!$res){
 					$data["success"] = false;
 					$errors["submit"] = "Server is busy!";
 					$data["errors"]  = $errors;
 				}else{
-					$res1 = runQuery("select * from users WHERE referral_code='$code'");
-					if($res1){
-						$row1 = mysqli_fetch_array($res1);
-						$oldPoints = $row1['points'];
-						$newPoints = $oldPoints + $old_user_points;
-						$res1 = runQuery("update users set points = '$newPoints' where referral_code='$code'");
-						if(!$res1){
-							$data["success"] = false;
-							$errors["submit"] = "Unable to update WEpoints in main user!";
-							$data["errors"]  = $errors;
-						}
+					/* Mobile No Verification */
+					$sms_txt = "The SMS verification code is ".$sms_code.". Please complete your mobile verfication with the code sent above.";
+					$sms_res = sendSMS($sms_txt, $input_mobile);
+					if(strcmp($sms_res, "Sent.") != 0){
+						generateLog("SMS Failed with Response = ".$sms_res.";Text = ".$sms_txt);
 					}
-					$randomString = "http://wecarriers.com/ravi_4/regConfirm.php?verifyString=".$input_email."_wecarrier_".$newRand;
-		
+
+					/* Email Verification */
+					$randomString = "http://wecarriers.com/prasad_1/regConfirm.php?verifyString=".$input_email."_wecarrier_".$newRand;
+
 					$subject = "Activation Request from WeCarriers";
 					$message = "Welcome ".$input_username.",<br/>".
 							   "Please <a href=\"".$randomString."\">Click Here</a> to confirm your Subscription<br/>".
@@ -92,7 +85,7 @@ if(!$wc_uid){
 						$data["errors"]  = $errors;
 					}else{
 						$data["success"] = true;
-			        		$page_message = buildMessage("Congratulations!", "Your Registration is successfull. Please verify both your Mobile Number and Email Address.");
+			        	$page_message = buildMessage("Congratulations!", "Your Registration is successfull. Please verify both your Mobile Number and Email Address.");
 						setPageSuccessMessage($page_message);
 					}
 				}

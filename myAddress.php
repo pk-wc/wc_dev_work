@@ -102,18 +102,15 @@ if($wc_uid){
 	echo '    							<span id="address_status" class="error-status"></span></div>';
 	echo '    						</div>';
 	echo '    						<div style="margin-top: 5px;">';
-	$pincode = $row['pincode'];
-	$res1 = runQuery("select * from pincodes where pincode='$pincode'");
-	$row1 = mysqli_fetch_array($res1);
         if($valid_address){
-        echo '    						        <input type="text" id="city" name="city" class="form-control" placeholder="City" value="'.$row1['city'].'" disabled>';
+        echo '    						        <input type="text" id="city" name="city" class="form-control" placeholder="City" value="'.$row['city'].'" disabled>';
         }else{
 	echo '  						        <input type="text" id="city" name="city" class="form-control" placeholder="City" disabled>';
         }
 	echo '    						</div>';
 	echo '    						<div style="margin-top: 5px;">';
         if($valid_address){
-        echo '    						<input type="text" id="state" name="state" class="form-control" placeholder="State" value="'.$row1['state'].'" disabled>';
+        echo '    						<input type="text" id="state" name="state" class="form-control" placeholder="State" value="'.$row['state'].'" disabled>';
         }else{
 	echo '    						<input type="text" id="state" name="state" class="form-control" placeholder="State" disabled>';
         }
@@ -156,9 +153,6 @@ if($wc_uid){
 	$res = runQuery("select * from address where address_id in (select address_id from user_address where user_id='$wc_uid')");
 	if($res && mysqli_num_rows($res) > 0){
 			while($row = mysqli_fetch_array($res)){
-			$pincode = $row['pincode'];
-			$res1 = runQuery("select * from pincodes where pincode='$pincode'");
-			$row1 = mysqli_fetch_array($res1);
                         echo '    		<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">';
 			echo '    			<div class="panel panel-primary" >';
 			echo '    				<div class="panel-heading" style="text-align: center;">';
@@ -168,8 +162,8 @@ if($wc_uid){
 			echo '    					<div style="font-size: 12px; overflow: auto; width: 180px; height: 130px;">';
 			echo '                  		<div style="">'.$row['address'].'</div>';
 			echo '                  		<div style=""><label style="width: 30%; font-weight: bold;">Pincode</label><label style="font-weight: normal;">'.$row['pincode'].'</label></div>';
-			echo '                  		<div style=""><label style="width: 30%; font-weight: bold;">City</label><label style="font-weight: normal;">'.$row1['city'].'</label></div>';
-			echo '                  		<div style=""><label style="width: 30%; font-weight: bold;">State</label><label style="font-weight: normal;">'.$row1['state'].'</label></div>';
+			echo '                  		<div style=""><label style="width: 30%; font-weight: bold;">City</label><label style="font-weight: normal;">'.$row['city'].'</label></div>';
+			echo '                  		<div style=""><label style="width: 30%; font-weight: bold;">State</label><label style="font-weight: normal;">'.$row['state'].'</label></div>';
 			echo '                  		<div style=""><label style="width: 30%; font-weight: bold;">Country</label><label style="font-weight: normal;">India</label></div>';
 			echo '    					</div>';
 			echo '    				</div>';

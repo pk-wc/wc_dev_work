@@ -26,7 +26,7 @@ $headers  = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= "From:".$input_name."<".$input_email.">\r\n";
 $mailSent = mail($dest_email, $subject, $message, $headers);
-
+//$mailSent = SendMail($input_email, $subject, $message);
 if(!$mailSent){
 	$data["success"] = false;
 	$errors["submit"] = "Unable to send Message!";
