@@ -22,7 +22,6 @@ echo '  <body>';
 
 showHeader("user");
 loadLoginModal();
-loadRegisterModal();
 
 if($wc_uid){
 	$res = runQuery("select * from users where user_id='$wc_uid'");

@@ -27,11 +27,10 @@ echo '  <body>';
 showHeader("contactUs");
 loadLoginModal();
 
-
-echo '<div class="container" style="margin-top: 50px;">';
+echo ' <div id="content">';
+echo '<div class="container">';
 checkPageMessages();
 echo '</div>';
-echo '<div class="container" style="">';/*ravi*/
 echo '<section id="contact">
         <div class="container">
             <div class="row">
@@ -91,14 +90,9 @@ echo '<section id="contact">
                 </div>
             </div>
         </div>
-     </section>  
-     <div>';
-
-
-
-
+     </section>';
+echo '</div>';    
 showFooter();
-
 loadLaterJSFiles();
 echo '  </body>';
 echo '</html>';

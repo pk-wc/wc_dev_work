@@ -15,7 +15,6 @@ if($wc_uid){
 			$res = runQuery("select * from user_address where address_id='$address_id' and user_id='$wc_uid'");
 			if($res && mysqli_num_rows($res)){
 				$res = runQuery("delete from address where address_id='$address_id'");
-				echo $address_id;
 				if(!$res){
 					$page_message = buildMessage("Operation Failed!", "An error occurred while deleting your address");
 				}
@@ -38,6 +37,6 @@ if($wc_uid){
 	}
 }
 
-//header("location: myAddress.php");
+header("location: myProfile.php?as_a=address");
 
 ?>

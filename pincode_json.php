@@ -15,9 +15,9 @@ if(isset($q) || !empty($q)) {
     $result = mysqli_query($con,$str);
     $res = array();
     while($resultSet = mysqli_fetch_assoc($result)) {
-     $res[$resultSet['id']]['id'] =  $resultSet['region']."-".$resultSet['city']."-".$resultSet['district']."-".$resultSet['state'];
+     $res[$resultSet['id']]['id'] =  $resultSet['region']."-".$resultSet['city']."-".$resultSet['state'];
      $res[$resultSet['id']]['value'] =  $resultSet['pincode'];
-    $res[$resultSet['id']]['label'] =  $resultSet['region'].",".$resultSet['city'].",".$resultSet['district'].",".$resultSet['state'].",".$resultSet['pincode'];
+    $res[$resultSet['id']]['label'] =  $resultSet['region'].",".$resultSet['city'].",".$resultSet['state'].",".$resultSet['pincode'];
     }
     if(!$res) {
         $res[0] = 'Not found!';

@@ -4,11 +4,12 @@ session_start();
 require_once("custom/funcs/functions.php");
 
 $page_message = "";
+$errors         = array();      // array to hold validation errors
+$data           = array();      // array to pass back data
 
 $wc_uid = getSessionUID();
 
 if($wc_uid){
-	if( isset($_POST['input_old_password']) && isset($_POST['input_new_password']) && isset($_POST['input_re_new_password']) ){
 		$input_old_password    = mres_ss($_POST['input_old_password']);
 		$input_new_password    = mres_ss($_POST['input_new_password']);
 		$input_re_new_password = mres_ss($_POST['input_re_new_password']);
@@ -16,43 +17,38 @@ if($wc_uid){
 		$res = runQuery("select password from users where user_id='$wc_uid'");
 		if($res && mysqli_num_rows($res)){
 			$row = mysqli_fetch_array($res);
-			if(isValidPassword($input_old_password) && isValidPassword($input_new_password) && isValidPassword($input_re_new_password)){
-				$string = md5($input_old_password);
-				$subs = substr($string, 0, strlen($row['password']));
-				if($subs == $row['password']){
-					if(strcmp($input_new_password, $input_re_new_password) == 0){
-						$hash = md5($input_new_password);
-						$q = "update users set password='$hash' where user_id='$wc_uid'";
-						$res = runQuery($q);
-						if(!$res){
-							$page_message = buildMessage("Update Failed!", "An error occurred while updating your settings");
-						}
-					}else{
-						$page_message = buildMessage("Update Failed!", "The new and re-typed new password do not match");
-					}
+			$string = md5($input_old_password);
+			$subs = substr($string, 0, strlen($row['password']));
+			if($subs == $row['password']){
+				$hash = md5($input_new_password);
+				if($hash==$subs){
+					$data["success"] = false;
+					$errors["submit"] = "Current and New password must be different!";
+					$data["errors"]  = $errors;
 				}else{
-					$page_message = buildMessage("Update Failed!", "Your current password does not match with our records");
-				}
+					$q = "update users set password='$hash' where user_id='$wc_uid'";
+					$res = runQuery($q);
+					if(!$res){
+						$data["success"] = false;
+						$errors["submit"] = "Server is busy!";
+						$data["errors"]  = $errors;
+					}else{
+						$data["success"] = true;
+						$page_message = buildMessage("Success!", "Your password have been updated successfully");
+						setPageSuccessMessage($page_message);
+					}	
+				}	
 			}else{
-				$page_message = buildMessage("Update Failed!", "Please provide appropriate values");
+				$data["success"] = false;
+				$errors["submit"] = "Your current password does not match with our records!";
+				$data["errors"]  = $errors;
 			}
 		}else{
-			$page_message = buildMessage("Update Failed!", "An error occurred while updating your settings");
+			$data["success"] = false;
+			$errors["submit"] = "Server is busy!";
+			$data["errors"]  = $errors;
 		}
-	}else{
-		$page_message = buildMessage("Update Failed!", "Please provide appropriate values");
-	}
-
-	if(strlen($page_message) > 0){
-		//generateLog($page_message);
-		setPageErrorMessage($page_message);
-	}else{
-		$page_message = buildMessage("Success!", "Your settings have been updated successfully");
-		setPageSuccessMessage($page_message);
-	}
+		echo json_encode($data);	
 }
-
-//echo $page_message;
-header("location: mySettings.php");
 
 ?>

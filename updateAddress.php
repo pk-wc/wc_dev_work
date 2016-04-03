@@ -26,8 +26,6 @@ if($wc_uid){
 		$input_address_label = mres_ss($_POST['input_address_label']);
 		$input_pincode       = mres_ss($_POST['input_pincode']);
 		$input_address       = mres_ss($_POST['input_address']);
-		$city                = mres_ss($_POST['city']);
-		$state               = mres_ss($_POST['state']);
 		
 		$res = runQuery("select * from address where address_label='$input_address_label' and address_id in (select address_id from user_address where user_id='$wc_uid')");
 		
@@ -40,7 +38,7 @@ if($wc_uid){
 			}
 			else
 			{
-				$q = "update address set address_label='$input_address_label',pincode='$input_pincode',address='$input_address',city='$city',state='$state' ".
+				$q = "update address set address_label='$input_address_label',pincode='$input_pincode',address='$input_address' ".
 			     "where address_id='$address_id'";
 				$res = runQuery($q);
 				if(!$res){
@@ -55,7 +53,7 @@ if($wc_uid){
 			}
 
 		}else{
-			$q = "update address set address_label='$input_address_label',pincode='$input_pincode',address='$input_address',city='$city',state='$state' ".
+			$q = "update address set address_label='$input_address_label',pincode='$input_pincode',address='$input_address' ".
 			     "where address_id='$address_id'";
 			$res = runQuery($q);
 			if(!$res){

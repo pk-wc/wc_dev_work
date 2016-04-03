@@ -1,13 +1,53 @@
-html {
-  position: relative;
-  min-height: 100%;
+html,body{
+	min-height: 100%;
+	padding:0; 
+	margin:0;
+	max-width: 100%;
+	overflow-x: hidden;
 }
-footer p{
-	color:#000;
+
+#wrapper{
+	padding:50px 0px 100px 0px; 
+	position:absolute; 
+	top:0; 
+	bottom:0; 
+	left:0; 
+	right:0;
+}
+
+#content{
+	min-height:100%;
+}
+
+header{
+	margin-top:-50px;
+	height:50px;
+	z-index: 20;
+}
+
+footer{
+	margin-bottom:-100px;
+	padding-top:30px;
+	height:100px;
+	background-color:#009688;
+}
+@media screen and (max-width:767px){
+	footer{
+		margin-bottom:-150px;
+		padding-top:30px;
+		height:150px;
+		background-color:#009688;
+	}
+}
+
+a{
+	color:#009688;
+	cursor: pointer;
 }
 p{
 	text-align:justify;
 }
+
 .has-error{
 	border-color: red;
 }
@@ -19,22 +59,22 @@ p{
 }
 /*Login form*/
 
-#loginModal .nav-tabs{
+.profile_tab .nav-tabs,#loginModal .nav-tabs{
   background-color:#fff;
 }
 
-#loginModal .nav-tabs > li > a{
+.profile_tab .nav-tabs > li > a,#loginModal .nav-tabs > li > a{
   color: #939393;
   font-size: 14px;
 }
-#loginModal .nav-tabs > li > a:hover{
+.profile_tab .nav-tabs > li > a:hover,#loginModal .nav-tabs > li > a:hover{
   background-color: #FAC106 !important;
     border-radius: 0;
     color:#000;
 }
-#loginModal .nav-tabs > li.active > a,
-#loginModal .nav-tabs > li.active > a:focus,
-#loginModal .nav-tabs > li.active > a:hover{
+.profile_tab .nav-tabs > li.active > a,#loginModal .nav-tabs > li.active > a,
+.profile_tab .nav-tabs > li.active > a:focus,#loginModal .nav-tabs > li.active > a:focus,
+.profile_tab .nav-tabs > li.active > a:hover,#loginModal .nav-tabs > li.active > a:hover{
     background-color: #fff !important;
     color:#009688;
 }
@@ -59,7 +99,7 @@ p{
 	color: #fff;
 }
 
-.login-modal i,a,a:hover,a:focus {
+.login-modal a,a:hover,a:focus {
 	color: #009688;
 }
 
@@ -74,6 +114,114 @@ p{
 	margin-top:15px;
 	margin-bottom:15px;
 }
+
+.icon{
+	color: #009688;
+}
+/*round division*/
+#round_div{    
+	width:120px;
+	height:120px;
+	background-color:#009688;
+	border-radius:100%;
+	text-align:center;
+	line-height:120px;
+}
+#round_div span
+{
+    line-height: normal;
+    font-size:16px;
+    font-weight:bold;
+    color:#fff;
+    display:inline-block;
+    vertical-align: middle;
+}
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.fa-rotate-135 {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+}
+.fa-rotate-minus-55 {
+    -webkit-transform: rotate(-55deg);
+    -moz-transform: rotate(-55deg);
+    -ms-transform: rotate(-55deg);
+    -o-transform: rotate(-55deg);
+    transform: rotate(-55deg);
+}
+.fa-rotate-55 {
+    -webkit-transform: rotate(55deg);
+    -moz-transform: rotate(55deg);
+    -ms-transform: rotate(55deg);
+    -o-transform: rotate(55deg);
+    transform: rotate(55deg);
+}
+
+/*progress bar*/
+#msform {
+	margin: 25px auto;
+	text-align: center;
+	position: relative;
+}
+#progressbar {
+	margin-bottom: 30px;
+	overflow: hidden;
+	/*CSS counters to number the steps*/
+	counter-reset: step;
+}
+#progressbar li {
+	list-style-type: none;
+	color: #d2d2d2;
+	font-size: 12px;
+	width: 25%;
+	float: left;
+	position: relative;
+}
+#progressbar li:before {
+	content: counter(step);
+	counter-increment: step;
+	width: 30px;
+	line-height: 30px;
+	display: block;
+	font-size: 12px;
+	color: #fff;
+	background: #d2d2d2;
+	border-radius: 3px;
+	margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+	content: '';
+	width: 100%;
+	height: 10px;
+	background: #d2d2d2;
+	position: absolute;
+	left: -50%;
+	top: 10px;
+	z-index: -1; /*put it behind the numbers*/
+}
+#progressbar li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none; 
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,  #progressbar li.active:after{
+	background: #009688;
+	color: #fff;
+}
+#progressbar li.active{
+	color: #009688;
+}
+
 
 /*Contact form*/
 

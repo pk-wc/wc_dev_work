@@ -42,8 +42,8 @@ echo '  <body>';
 
 showHeader("my_journeys");
 loadLoginModal();
-
-echo '    <div class="container" style="margin-top: 50px;">';
+echo ' <div id="content">';
+echo '    <div class="container">';
 echo '    </div>';
 
 if($wc_uid){
@@ -67,16 +67,13 @@ if($wc_uid){
 	$valid_journey = false;
 	
 	echo '  <div class="container">';/*ravi*/
-	echo '  <div class="row">';/*ravi*/
-	echo '<div class="col-sm-12 col-md-12 col-xs-12 col-lg-12 main"  style="padding:0px 10px 0px 10px">';/*ravi*/
 	echo '<h1 class="page-header">My Journeys</h1>';
 	echo '<div class="row" style="">';
 	checkPageMessages();
 
 	if($eid){
 		$valid_journey = false;
-		$res = runQuery("select * from journeys where journey_id='$eid' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') ".
-						"and journey_date >= '".date('Y-m-d')."'");
+		$res = runQuery("select * from journeys where journey_id='$eid' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid')");
 		if(mysqli_num_rows($res) > 0){
 			$row = mysqli_fetch_array($res);
 			$valid_journey = true;
@@ -240,8 +237,7 @@ if($wc_uid){
 	echo '		<div style="width: 100%;">';
 	echo '			       <div style="border-bottom: 1px solid #fac106; padding-bottom: 2px; font-size: 24px; margin-bottom: 10px;">Journey List</div>';
 	echo '			       <div style="border: 1px solid #009688;border-radius: 0px">';
-	$res = runQuery("select * from journeys where journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and journey_date >= '".
-					date('Y-m-d')."' order by journey_date desc");
+	$res = runQuery("select * from journeys where journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') order by journey_date");
 	if($res && mysqli_num_rows($res)){
 		while($row = mysqli_fetch_array($res)){
 			echo '			<div style="padding: 10px; border-bottom: 1px solid #009688;">';
@@ -257,8 +253,11 @@ if($wc_uid){
 			$row1 = mysqli_fetch_array($res1);
 			echo '                  			<div style="">'.$row1['address'].'</div>';
 			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">Pincode</label><label style="font-weight: normal;">'.$row1['pincode'].'</label></div>';
-			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">City</label><label style="font-weight: normal;">'.$row1['city'].'</label></div>';
-			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">State</label><label style="font-weight: normal;">'.$row1['state'].'</label></div>';
+			$pincode = $row1['pincode'];
+			$res2 = runQuery("select * from pincodes where pincode='$pincode'");
+			$row2 = mysqli_fetch_array($res2);
+			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">City</label><label style="font-weight: normal;">'.$row2['city'].'</label></div>';
+			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">State</label><label style="font-weight: normal;">'.$row2['state'].'</label></div>';
 			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">Country</label><label style="font-weight: normal;">India</label></div>';
 			$source_pincode = $row1['pincode'];
 			echo '					</div>';
@@ -268,8 +267,11 @@ if($wc_uid){
 			$row1 = mysqli_fetch_array($res1);
 			echo '                  			<div style="">'.$row1['address'].'</div>';
 			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">Pincode</label><label style="font-weight: normal;">'.$row1['pincode'].'</label></div>';
-			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">City</label><label style="font-weight: normal;">'.$row1['city'].'</label></div>';
-			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">State</label><label style="font-weight: normal;">'.$row1['state'].'</label></div>';
+			$pincode = $row1['pincode'];
+			$res2 = runQuery("select * from pincodes where pincode='$pincode'");
+			$row2 = mysqli_fetch_array($res2);
+			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">City</label><label style="font-weight: normal;">'.$row2['city'].'</label></div>';
+			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">State</label><label style="font-weight: normal;">'.$row2['state'].'</label></div>';
 			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">Country</label><label style="font-weight: normal;">India</label></div>';
 			$destination_pincode = $row1['pincode'];
 			echo '					</div>';
@@ -303,14 +305,12 @@ if($wc_uid){
 	echo '	</div>';
 	
         echo '</div>';
-	showSidebarBottom();
-	echo '</div>';
-	echo '</div>';
 	echo '</div>';
 }else{
-	showFooter();
+header("location: index.php");
 }
-
+echo ' </div>';
+showFooter();
 loadLaterJSFiles();
 echo '  </body>';
 echo '</html>';

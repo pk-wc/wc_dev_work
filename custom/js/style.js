@@ -4,6 +4,13 @@ $(function() {
     {dateFormat: 'yy-mm-dd'});
   });
 
+//function for address
+function deleteAddress(aid){
+	if(confirm("Are you sure you want to delete this Address?")){
+		window.location.href = "deleteAddress.php?aid=" + aid;
+	}
+}
+
 //function for current date in YYYY-MM-DD
 function currentDate() {
     var date = new Date();
@@ -85,9 +92,104 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     $('.nav a').filter('a[href="#'+target[1]+'"]').tab('show');
 });
 
-
-
+//function for change password form
+$( "#changePasswordForm" ).submit(function( event ) {
+	var formData = {
+		"input_old_password" : $("input[name=input_old_password]").val(),
+		"input_new_password" : $("input[name=input_new_password]").val(),
+		"input_re_new_password" : $("input[name=input_re_new_password]").val()
+	};
 	
+	$("#change_password_submit_status").empty();
+	if(!formData["input_old_password"]){
+		$("#input_old_password").addClass("has-error");
+		$("#change_password_old_status").html("This field is mandatory.");
+	}else{
+		if(formData["input_old_password"].length < 6){
+			$("#input_old_password").addClass("has-error");
+			$("#change_password_old_status").html("Invalid Current Password.");
+		}else{
+			$("#input_old_password").removeClass("has-error");
+			$("#change_password_old_status").empty();
+		}
+	
+	}
+	if(!formData["input_new_password"]){
+		$("#input_new_password").addClass("has-error");
+		$("#change_password_new_status").html("This field is mandatory.");
+	}else{
+		if(formData["input_new_password"].length < 6){
+			$("#input_new_password").addClass("has-error");
+			$("#change_password_new_status").html("At least six characters.");
+		}else{
+			$("#input_new_password").removeClass("has-error");
+			$("#change_password_new_status").empty();
+		}
+	}
+	if(!formData["input_re_new_password"]){
+		$("#input_re_new_password").addClass("has-error");
+		$("#change_password_re_new_status").html("This field is mandatory.");
+	}else{
+		$("#input_re_new_password").removeClass("has-error");
+		$("#change_password_re_new_status").empty();
+	}
+	if(formData["input_new_password"] != formData["input_re_new_password"] && formData["input_new_password"] && formData["input_re_new_password"]){
+		$("#change_password_re_new_status").html("Re-type New Password must be same as New Password.");
+	}
+	if(!$("#change_password_old_status").html() && !$("#change_password_new_status").html() && !$("#change_password_re_new_status").html()){
+		$.ajax({
+			type        : "POST", 
+			url         : "userSettings.php",
+			data        : formData,		    
+			success	: function(response){
+				data = JSON.parse(response);
+				if (!data.success) {
+				    	if(data.errors.submit){
+				    		$("#change_password_submit_status").html(data.errors.submit);
+				    	}
+				}else{
+					location.reload();
+				}
+			},
+			error	: function(response){
+				alert("error");
+			}  
+		});
+	}
+	return false;
+});
+
+//function for referral form
+$( "#referralForm" ).click(function( event ) {
+	var formData = {
+		"email" : $("input[name=input_email]").val(),
+		"phone" : $("input[name=input_mobile]").val()
+	};
+	$("#submit_status").empty();
+	if(!formData["email"] && !formData["phone"]){
+		$("#submit_status").html("Please enter Email address or/and Mobile number.");
+	}else{
+		$.ajax({
+			type        : "POST", 
+			url         : "userReferral.php",
+			data        : formData,		    
+			success	: function(response){
+				data = JSON.parse(response);
+				if (!data.success) {
+				    	if(data.errors.submit){
+				    		$("#submit_status").html(data.errors.submit);
+				    	}
+				}else{
+					location.reload();
+				}
+			},
+			error	: function(response){
+				alert("error");
+			}  
+		});
+	}
+	return false;
+});
 
 //function for contact form
 $(document).ready(function(){ 
@@ -312,7 +414,7 @@ var message = "<div style='width: 80%; display: inline-block'><label>me</label>:
 	return false;
 });
 
-//function for login form
+//function for forget form
 $( "#forgetform" ).submit(function( event ) {
 	var formData = {
 		"input_email" : $("input[name=input_forget_email]").val(),
@@ -333,12 +435,12 @@ $( "#forgetform" ).submit(function( event ) {
 			success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
-			    	if(data.errors.submit){
-			    		$("#forget_submit_status").html(data.errors.submit);
-			    	}
+				$("#forget_submit_status").html(data.errors.submit);
 			}
 			else{
-				location.reload();
+				$("#forget_otp").show();
+				$("#forget_email").hide();
+				$("#otpEmail").val(formData["input_email"]);				
 			}
 			},
 			error	: function(response){
@@ -348,6 +450,64 @@ $( "#forgetform" ).submit(function( event ) {
 	}
 	return false;
 });
+
+function sendOTP()
+{
+	var email = $("#otpEmail").val();
+	var formData = {
+		"input_email" : email,
+	};
+	$.ajax({
+		type        : "POST", 
+		url         : "sendOTP.php",
+		data        : formData,		    
+		success	: function(response){
+		data = JSON.parse(response);
+			if (!data.success) {
+				$("#forget_submit_status").html(data.errors.submit);
+			}
+		},
+		error	: function(response){
+		alert("error");	
+		}  
+	});
+	return false;
+}
+
+$( "#otpform" ).submit(function( event ) {
+	var formData = {
+		"input_otp" : $("input[name=input_forget_otp]").val(),
+		"input_email" : $("input[name=otpEmail]").val(),
+	};
+	if(!formData["input_otp"]){
+		$("#input_forget_otp").addClass("has-error");
+		$("#otp_submit_status").html("OTP is required.");
+	}else{
+		$("#input_forget_otp").removeClass("has-error");
+		$("#otp_submit_status").empty();
+	}
+	if(!$("#otp_submit_status").html()){
+		$.ajax({
+			type        : "POST", 
+			url         : "verifyOTP.php",
+			data        : formData,		    
+			success	: function(response){
+			data = JSON.parse(response);
+			if (!data.success) {
+				$("#otp_submit_status").html(data.errors.submit);
+			}
+			else{
+				location.href="myProfile.php?as_a=settings";
+			}
+			},
+			error	: function(response){
+			alert("error");	
+			}  
+		});
+	}
+	return false;
+});
+
 	
 //function for login form
 $( "#loginform" ).submit(function( event ) {
@@ -378,6 +538,7 @@ $( "#loginform" ).submit(function( event ) {
 	}
 	
 	if(!$("#login_mobile_status").html() && !$("#login_password_status").html()){
+		
 		$.ajax({
 			type        : "POST", 
 			url         : "userLogin.php",
@@ -397,6 +558,7 @@ $( "#loginform" ).submit(function( event ) {
 			alert("error");	
 			}  
 		});
+		
 	}
 	return false;
 });
@@ -409,8 +571,12 @@ $( "#registerform" ).submit(function( event ) {
 		"input_username" : $("input[name=input_username]").val(),
 		"input_password" : $("input[name=input_password]").val(),
 		"input_repassword" : $("input[name=input_repassword]").val(),
+		"input_code" : $("input[name=input_code]").val(),
 	};
 	$("#submit_status").empty();
+	$("#code_status").empty();
+	$("#input_code").removeClass("has-error");
+	
 	if(!formData["input_mobile"]){
 		$("#input_mobile").addClass("has-error");
 		$("#mobile_status").html("Mobile no. is required.");
@@ -470,26 +636,48 @@ $( "#registerform" ).submit(function( event ) {
 		$("#repassword_status").html("Re-type Password must be same as Password.");
 	}
 	
-	if(!$("#mobile_status").html() && !$("#email_status").html() && !$("#username_status").html() && !$("#password_status").html() && !$("#repassword_status").html()){
+	if(formData["input_code"]){
 		$.ajax({
 			type        : "POST", 
-			url         : "userRegister.php",
+			url         : "checkReferralCode.php",
 			data        : formData,		    
 			success	: function(response){
 			data = JSON.parse(response);
-			if (!data.success) {
-			    	if(data.errors.submit){
-			    		$("#submit_status").html(data.errors.submit);
-			    	}
-			}
-			else{
-				location.reload();
-			}
+				if (!data.success) {
+			    		$("#code_status").html("Invalid Referral Code (Case-Sensitive)!");
+			    		$("#input_code").addClass("has-error");
+				}
 			},
 			error	: function(response){
-			alert("error");	
+				alert("error");	
 			}  
 		});
+	}
+	
+	if(!$("#mobile_status").html() && !$("#email_status").html() && !$("#username_status").html() && !$("#password_status").html() && !$("#repassword_status").html() && !$("#code_status").html()){
+		if(!$("#input_register_checkbox").is(":checked")){
+			alert("Please ensure that you are 18+");
+		}else{
+			$.ajax({
+				type        : "POST", 
+				url         : "userRegister.php",
+				data        : formData,		    
+				success	: function(response){
+				data = JSON.parse(response);
+				if (!data.success) {
+				    	if(data.errors.submit){
+				    		$("#submit_status").html(data.errors.submit);
+				    	}
+				}
+				else{
+					location.reload();
+				}
+				},
+				error	: function(response){
+				alert("error");	
+				}  
+			});
+		}
 	}
 	return false;
             
@@ -1124,7 +1312,7 @@ function fillAddress()
             var data = vl.split("-");
             //console.log(data);
             $("#city").val(data[1]);
-            $("#state").val(data[3]);
+            $("#state").val(data[2]);
       },
       open: function() {
                  // D0 something on open event.

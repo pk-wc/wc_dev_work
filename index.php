@@ -18,45 +18,32 @@ getPageTitle("Welcome");
 loadCSSFiles();
 loadJSFiles();
 echo '  </head>';
-echo '  <body style="background-color:#eee">';
+echo '  <body>';
 
 showHeader("home");
 loadLoginModal();
-if($wc_uid){
-		
-	echo '
-		<div class="container" style="margin-top: 50px;background-color:#fff;box-shadow: 0 2px 5px black;">
-			<div class="row">
-			     	
-			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 20px;text-align:center">
-			     	<a href="myDashboard.php?as_a=sender"><button type="button" class="btn index-btn" style="width:80%">Find a weSender</button></a>
+echo ' <div id="content">';
+	echo '	<section style="background-image:url(custom/images/banner.jpg);height:550px;">';
+	echo '   <div class="container">
+			<div class="row">';
+	checkPageMessages();
+	
+	echo '		     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
+			     		<a href="myDashboard.php?as_a=sender"><button type="button" class="btn index-btn" style="width:80%">Find a WEsender</button></a>
 			     	</div>
-			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 20px;text-align:center">
-			     		<a href="myDashboard.php?as_a=carrier"><button type="button" class="btn index-btn"  style="width:80%">Find a weCarrier</button></a>
+			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
+			     		<a href="myDashboard.php?as_a=carrier"><button type="button" class="btn index-btn"  style="width:80%">Find a WEcarrier</button></a>
 			     	</div>
 			</div>
-			<div class="row" style="margin-bottom:250px">
-			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 20px;text-align:center">
+			<div class="row" style="padding-bottom:10px">
+			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
 			     		<a href="myOrders.php?from=index"><button type="button" class="btn index-btn"  style="width:80%">Enter a new Parcel</button></a>
 			     	</div>
-			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 20px;text-align:center">
+			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
 			     		<a href="myJourneys.php?from=index"><button type="button" class="btn index-btn"  style="width:80%">Enter a new Journey</button></a>
 			     	</div>
-			</div>';	
-	        	showFooter();	
-	 echo '   </div>';
-
-	
-				
-}else{
-
-	echo '	<section style="margin-top: 50px">';
-	checkPageMessages();
-	echo '			<div class="row">';
-	echo '				<div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">';
-	echo '					<img src="custom/images/banner.jpg" class="img-responsive" alt="Banner Image!!!">';
-	echo '				</div>';
-	echo '		</div>';
+			</div>';
+	echo '   </div>';			
 	echo '	</section>';
 	echo '	<section id="how_it_works">
 						<h2 style="margin-bottom: 40px;">HOW IT WORKS?</h2>
@@ -69,7 +56,7 @@ if($wc_uid){
 								</div>
 							</div>
 						</div>
-					</section>';
+		</section>';
 
 	echo '	<section id="what_we_do">
 						<h2 style="margin-bottom: 40px;">WHAT WE DO?</h2>
@@ -91,10 +78,42 @@ if($wc_uid){
 								</div>
 							</div>
 						</div>
-					</section>';
-	showFooter();
-}
-
+		</section>';
+	echo '	<section id="how_it_works">
+						<h2 style="margin-bottom: 40px;">HOW IT WORKS?</h2>
+						<div class="container">
+							<div class="row">
+								<div style="margin-left:200px"><div id="round_div"><span>Enter Details</span></div></div>
+							</div>
+							<div class="row">
+								<div><span style="margin-left:150px"><i class="fa fa-rotate-55 fa-5x fa-chevron-up"></i></span>
+								<span style="margin-left:100px;pading-top:10px"><i class="fa fa-rotate-55 fa-5x fa-chevron-right"></i></span></div>
+							</div>
+							<div class="row">
+								<div class="col-md-2"><div id="round_div"><span>Review the WEcarrier</span></div></div>
+								<div class="col-md-2 col-md-offset-2"><div id="round_div"><span>Find the WEcarrier</span></div></div>
+							</div>
+							<div class="row">
+								<div class="col-md-2"><i class="fa fa-5x fa-chevron-up"></i></div>
+								<div class="col-md-2 col-md-offset-2"><i class="fa fa-5x fa-chevron-down"></i></div>
+							</div>
+							<div class="row">
+								<div class="col-md-2"><div id="round_div"><span>Handover Parcel & Pay</span></div></div>
+								<div class="col-md-2"><i class="fa fa-5x fa-chevron-left"></i></div>
+								<div class="col-md-2"><div id="round_div"><span>Get in Contact</span></div></div>
+							</div>
+							<div class="row">
+								<div class="col-md-2"><div id="round_div"><span>Enter Details</span></div></div>
+								<div class="col-md-2"><div id="round_div"><span>Select the Parcel</span></div></div>
+								<div class="col-md-2"><div id="round_div"><span>Get in Contact</span></div></div>
+								<div class="col-md-2"><div id="round_div"><span>Collect Parcel & Money</span></div></div>
+								<div class="col-md-2"><div id="round_div"><span>Deliver Parcel</span></div></div>
+								<div class="col-md-2"><div id="round_div"><span>Review the WEsender</span></div></div>
+							</div>
+						</div>
+		</section>';
+echo ' </div>';
+showFooter();
 loadLaterJSFiles();
 echo '  </body>';
 echo '</html>';
