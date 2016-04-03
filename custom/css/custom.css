@@ -1,0 +1,21 @@
+.label-user-verified {
+	font-size: 10px; font-weight: normal; padding: 1px; border: 1px solid green; color: white; border-radius: 3px;background-color:green;
+}
+
+.label-user-not-verified {
+
+	font-size: 10px; font-weight: normal; padding: 1px; border: 1px solid red; color: red; border-radius: 3px;
+}
+
+.hover-text-header {
+	font-size: 48px; font-weight: bold; position: absolute; left: 0px; right: 0px; color: #FAC106; text-align: center;
+}
+
+.hover-text {
+	font-size: 36px; font-style: italic; position: absolute; left: 0px; right: 0px; color: #fff; text-align: justify;
+}
+
+.black-trans-back {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+}
