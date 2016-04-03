@@ -27,8 +27,9 @@ echo ' <div id="content">';
 	echo '   <div class="container">
 			<div class="row">';
 	checkPageMessages();
-	
-	echo '		     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
+
+	echo '		<h1>Find WEcarrier</h1>     	
+						<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
 			     		<a href="myDashboard.php?as_a=sender"><button type="button" class="btn index-btn" style="width:80%">Find a WEsender</button></a>
 			     	</div>
 			     	<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
@@ -43,7 +44,7 @@ echo ' <div id="content">';
 			     		<a href="myJourneys.php?from=index"><button type="button" class="btn index-btn"  style="width:80%">Enter a new Journey</button></a>
 			     	</div>
 			</div>';
-	echo '   </div>';			
+	echo '   </div>';
 	echo '	</section>';
 	echo '	<section id="how_it_works">
 						<h2 style="margin-bottom: 40px;">HOW IT WORKS?</h2>
