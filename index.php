@@ -27,34 +27,6 @@ echo ' <div id="content">';
 	echo '   <div class="container">
 			<div class="row">';
 	checkPageMessages();
-	echo '							<h1 style="color:#fff">Find Parcels(from WEsender) to carry</h1>';
-	echo '							<form action="" method="post">';
-	echo '								<div class="row">';
-	echo '                 <div class="col-xs-12 col-md-4 ui-widget" style="margin-bottom:2px">';
-	echo '								  <input type="text" id="pincode0" name="input_order_source_pincode_search" value="'.$input_order_source_pincode_search.'"" class="form-control" placeholder="Pincode of Pickup address" onkeyup="showPincode()">';
- 	echo '								 </div>';
-	echo '								 <div class="col-xs-12 col-md-4 ui-widget" style="margin-bottom:2px">';
-	echo '								  <input type="text" id="pincode1" name="input_order_destination_pincode_search" value="'.$input_order_destination_pincode_search.'"" class="form-control" placeholder="Pincode of Delivery address" onkeyup="showPincode()">';
-	echo '								 </div>';
-	echo '								 <div class="col-xs-12 col-md-4" style="text-align:center">';
-	echo '								  <button class="btn btn-primary" type="submit">Search Parcel</button>';
-	echo '								 </div>';
- 	echo '								</div>';
-	echo '							</form>';
-  echo '							<h1 style="color:#fff">Find Journeys(from WEcarrier)</h1>';
-	echo '							<form action="" method="post">';
-	echo '							<div class="row">';
-	echo '									<div class="col-xs-12 col-md-4 ui-widget" style="margin-bottom:2px">';
-	echo '										<input type="text" name="input_journey_source_pincode_search" value="'.$input_journey_source_pincode_search.'" id="pincode2" class="form-control" placeholder="Source Pincode" onkeyup="showPincode()">';
-	echo '									</div>';
-	echo '									<div class="col-xs-12 col-md-4 ui-widget" style="margin-bottom:2px">';
-	echo '									<input type="text" name="input_journey_destination_pincode_search" id="pincode3" value="'.$input_journey_destination_pincode_search.'" class="form-control" placeholder="Destination Pincode" onkeyup="showPincode()">';
-	echo '									</div>';
-	echo '									<div class="col-xs-12 col-md-4" style="text-align:center">';
-	echo '										<button class="btn btn-primary" type="submit">Search Journey</button>';
-	echo '									</div>';
-	echo '								</div>';
-	echo '							</form>';
 	echo '		<div class="col-xs-12 col-md-6 col-lg-6" style="margin-top: 10px;text-align:center">
 			     		<a href="myDashboard.php?as_a=sender"><button type="button" class="btn index-btn" style="width:80%">Find a WEsender</button></a>
 			     	</div>
