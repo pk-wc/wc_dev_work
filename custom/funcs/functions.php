@@ -565,13 +565,13 @@ function loadLoginModal(){
 							              	<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 							              	<div class="text-left" style="margin-left:10px;font-size:10px"><span>By registering you agree to our <a href="terms.php">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span></div>
 							    		</div>
-							    	</form>'.
+							    	</form>';
 							    	/*
 							    	 *  CR 44
 							    	 *  - To include a text box to specify the OTP.
 							    	 *  Fix BEGIN
 									 */
-							    	.'<form class="form-signin" id="verifyotpform">
+	echo					    	'<form class="form-signin" id="verifyotpform">
 								    	<div id="reg_otp" style="display: none;">
 											<div class="text-left" style="font-size: 12px; padding-bottom: 10px;">
 												An OTP has been sent to your mobile number. Please provide the code sent in the text box shown below.
@@ -591,9 +591,9 @@ function loadLoginModal(){
 											<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="verify_status" class="error-status"></span></div>
 											<button class="btn btn-lg btn-primary btn-block" type="submit">Verify</button>
 										</div>
-									</form>'.
+									</form>';
 									/*  Fix END - 44  */
-						        .'</div>
+	echo						'</div>
 						    	<div class="login-modal-footer">
 			  						<div class="row">
 										<div class="col-xs-8 col-sm-8 col-md-8">
