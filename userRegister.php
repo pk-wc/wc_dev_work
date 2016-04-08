@@ -53,10 +53,15 @@ if(!$wc_uid){
 				//$base10Rand = mt_rand($rangeMin, $rangeMax);
 				$base10Rand = mt_rand();
 				$newRand = base_convert($base10Rand, 10, 36);
+				$sms_code = rand(1000, 9999);
 
-				$con = connectDB();
-				$res = mysqli_query($con,"insert into users (mobile_no,username,password,email_id,email_verify_code,referral_code,points) values ('$input_mobile','$input_username','$hash','$input_email','$newRand','$newRand','$new_user_points')");
-				closeDB($con);
+				/*
+				 *  CR 44
+				 *  - To insert random code generated for SMS verification into the DB.
+				 *  Fix BEGIN
+				 */
+				$res = runQuery("insert into users (mobile_no,mobile_no_code,username,password,email_id,email_verify_code,referral_code,points) values ('$input_mobile','$sms_code','$input_username','$hash','$input_email','$newRand','$newRand','$new_user_points')");
+				/*  Fix END - 44  */
 				if(!$res){
 					$data["success"] = false;
 					$errors["submit"] = "Server is busy!";
@@ -74,6 +79,20 @@ if(!$wc_uid){
 							$data["errors"]  = $errors;
 						}
 					}
+					/*
+					 *  CR 44
+					 *  - To send SMS verification code
+					 *  Fix BEGIN
+					 */
+					// Send SMS verification code
+					$sms_txt = "Verification Code from WeCarriers is ".$sms_code;
+					$sms_res = sendSMS($sms_txt, $input_mobile);
+					if(strcmp($sms_res, "Sent.") != 0){
+						generateLog("SMS Failed with Response = ".$sms_res.";Text = ".$sms_txt);
+					}
+
+					// Send Email verification link
+					/*  Fix END - 44  */
 					$randomString = "http://wecarriers.com/ravi_4/regConfirm.php?verifyString=".$input_email."_wecarrier_".$newRand;
 		
 					$subject = "Activation Request from WeCarriers";
@@ -85,15 +104,14 @@ if(!$wc_uid){
 					$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 					$headers .= 'From: WeCarriers <no-reply@wecarriers.com>' . "\r\n";
 					$mailSent = mail($input_email, $subject, $message, $headers);
-					//$mailSent = SendMail($input_email, $subject, $message);
 					if(!$mailSent){
 						$data["success"] = false;
 						$errors["submit"] = "Unable to send Email verification code!";
 						$data["errors"]  = $errors;
 					}else{
 						$data["success"] = true;
-			        		$page_message = buildMessage("Congratulations!", "Your Registration is successfull. Please verify both your Mobile Number and Email Address.");
-						setPageSuccessMessage($page_message);
+			        	//$page_message = buildMessage("Congratulations!", "Your Registration is successfull. Please verify both your Mobile Number and Email Address.");
+						//setPageSuccessMessage($page_message);
 					}
 				}
 			}

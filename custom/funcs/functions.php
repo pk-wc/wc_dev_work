@@ -519,69 +519,93 @@ function loadLoginModal(){
 					    	</div>
 					    	<div role="tabpanel" class="tab-pane" id="signup">
 					    	    &nbsp;&nbsp;
-					    	    <form class="form-signin" id="registerform">
-						            <div class="row">
-						            	<div class="col-md-12">
-                            <div class="input-group" style="padding-bottom: 10px;">
-                              <div class="input-group-addon"><i class="fa fa-fw fa-user icon"></i></div>
-                              <label for="inputText" class="sr-only">Name</label>
-                              <input type="text" id="input_username" name="input_username" class="form-control" placeholder="Enter Name">
-                            </div>
-                            <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="username_status" class="error-status"></span></div>
-							              <div class="input-group" style="padding-bottom: 10px;">
-							                <div class="input-group-addon"><i class="fa fa-fw fa-envelope icon"></i></div>
-							                <label for="inputEmail" class="sr-only">Email Address</label>
-							                <input type="email" id="input_email" name="input_email" class="form-control" placeholder="Enter Email Address">
-							              </div>
-							              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="email_status" class="error-status"></span></div>
-                            <div class="input-group" style="padding-bottom: 10px;">
-							                <div class="input-group-addon"><i class="fa fa-fw fa-mobile icon"></i></div>
-							                <label for="inputMobile" class="sr-only">Mobile Number</label>
-							                <input type="text" id="input_mobile" name="input_mobile" class="form-control" placeholder="Enter Mobile Number" autofocus>
-							              </div>
-							              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="mobile_status" class="error-status"></span></div>
-							  	          <div class="input-group" style="padding-bottom: 10px;">
-							                <div class="input-group-addon"><i class="fa fa-fw fa-key icon"></i></div>
-							                <label for="inputPassword" class="sr-only">Password</label>
-							                <input type="password" id="input_password" name="input_password" class="form-control" placeholder="Enter Password">
-							              </div>
-							              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="password_status" class="error-status"></span></div>
-							              <div class="input-group" style="padding-bottom: 10px;">
-							                <div class="input-group-addon"><i class="fa fa-fw fa-key icon"></i></div>
-							                <label for="inputPassword" class="sr-only">Re-type Password</label>
-							                <input type="password" id="input_repassword" name="input_repassword" class="form-control" placeholder="Re-type Password">
-							              </div>
-							              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="repassword_status" class="error-status"></span></div>
-							              <div class="input-group" style="padding-bottom: 10px;">
-							                <div class="input-group-addon"><i class="fa fa-fw fa-share icon"></i></div>
-							                <label for="inputCode" class="sr-only">Referral Code</label>
-							                <input type="text" id="input_code" name="input_code" class="form-control" placeholder="Referral Code (optional)">
-							              </div>
-							              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="code_status" class="error-status"></span></div>
-							              <div class="input-group" style="padding-bottom: 10px;">
-							                <input type="checkbox" id="input_register_checkbox" name="input_register_checkbox"><span style="margin-left:5px;font-size:10px">I hereby certify that I am atleast 18 years of age.</span>
-							              </div>
-							              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="submit_status" class="error-status"></span></div>
-							              <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-							              <div class="text-left" style="margin-left:10px;font-size:10px"><span>By registering you agree to our <a href="terms.php">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span></div>
-							    	</div>
-						            </div>
-							    <div class="login-modal-footer">
-				  				<div class="row">
-									<div class="col-xs-8 col-sm-8 col-md-8">
-										<i class="fa fa-lock icon"></i>
-										<a href="#forget" class="forgetpass-tab" data-toggle="tab"> Forgot password? </a>
-
-									</div>
-
-									<div class="col-xs-4 col-sm-4 col-md-4">
-										<i class="fa fa-sign-in icon"></i>
-										<a href="#signin" class="signin-tab" data-toggle="tab"> Sign In </a>
-									</div>
-					  			</div>
-				  			    </div>
-						    </form>
-
+					            <div class="row">
+						    	    <form class="form-signin" id="registerform">
+						            	<div class="col-md-12" id="reg_form">
+                            				<div class="input-group" style="padding-bottom: 10px;">
+                              					<div class="input-group-addon"><i class="fa fa-fw fa-user icon"></i></div>
+                              					<label for="inputText" class="sr-only">Name</label>
+                              					<input type="text" id="input_username" name="input_username" class="form-control" placeholder="Enter Name">
+                            				</div>
+                            				<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="username_status" class="error-status"></span></div>
+							              	<div class="input-group" style="padding-bottom: 10px;">
+							                	<div class="input-group-addon"><i class="fa fa-fw fa-envelope icon"></i></div>
+							                	<label for="inputEmail" class="sr-only">Email Address</label>
+							                	<input type="email" id="input_email" name="input_email" class="form-control" placeholder="Enter Email Address">
+							              	</div>
+							              	<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="email_status" class="error-status"></span></div>
+                            				<div class="input-group" style="padding-bottom: 10px;">
+							                	<div class="input-group-addon"><i class="fa fa-fw fa-mobile icon"></i></div>
+							                	<label for="inputMobile" class="sr-only">Mobile Number</label>
+							                	<input type="text" id="input_mobile" name="input_mobile" class="form-control" placeholder="Enter Mobile Number" autofocus>
+							              	</div>
+							              	<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="mobile_status" class="error-status"></span></div>
+							  	          	<div class="input-group" style="padding-bottom: 10px;">
+							                	<div class="input-group-addon"><i class="fa fa-fw fa-key icon"></i></div>
+							                	<label for="inputPassword" class="sr-only">Password</label>
+							                	<input type="password" id="input_password" name="input_password" class="form-control" placeholder="Enter Password">
+							              	</div>
+							              	<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="password_status" class="error-status"></span></div>
+							              	<div class="input-group" style="padding-bottom: 10px;">
+							                	<div class="input-group-addon"><i class="fa fa-fw fa-key icon"></i></div>
+							                	<label for="inputPassword" class="sr-only">Re-type Password</label>
+							                	<input type="password" id="input_repassword" name="input_repassword" class="form-control" placeholder="Re-type Password">
+							              	</div>
+							              	<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="repassword_status" class="error-status"></span></div>
+							              	<div class="input-group" style="padding-bottom: 10px;">
+							                	<div class="input-group-addon"><i class="fa fa-fw fa-share icon"></i></div>
+							                	<label for="inputCode" class="sr-only">Referral Code</label>
+							                	<input type="text" id="input_code" name="input_code" class="form-control" placeholder="Referral Code (optional)">
+							              	</div>
+							              	<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="code_status" class="error-status"></span></div>
+							              	<div class="input-group" style="padding-bottom: 10px;">
+							                	<input type="checkbox" id="input_register_checkbox" name="input_register_checkbox"><span style="margin-left:5px;font-size:10px">I hereby certify that I am atleast 18 years of age.</span>
+							              	</div>
+							              	<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="submit_status" class="error-status"></span></div>
+							              	<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+							              	<div class="text-left" style="margin-left:10px;font-size:10px"><span>By registering you agree to our <a href="terms.php">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span></div>
+							    		</div>
+							    	</form>'.
+							    	/*
+							    	 *  CR 44
+							    	 *  - To include a text box to specify the OTP.
+							    	 *  Fix BEGIN
+									 */
+							    	.'<form class="form-signin" id="verifyotpform">
+								    	<div id="reg_otp" style="display: none;">
+											<div class="text-left" style="font-size: 12px; padding-bottom: 10px;">
+												An OTP has been sent to your mobile number. Please provide the code sent in the text box shown below.
+											</div>
+											<div class="input-group" style="padding-bottom: 10px;">
+												<div class="input-group-addon"><i class="fa fa-fw fa-key icon"></i></div>
+												<label for="inputOTP" class="sr-only">OTP</label>
+												<input type="text" id="input_otp" name="input_otp" class="form-control" placeholder="Enter OTP">
+											</div>
+											<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="otp_status" class="error-status"></span></div>
+											<div class="input-group" style="padding-bottom: 10px; display: none;">
+												<div class="input-group-addon"><i class="fa fa-fw fa-mobile icon"></i></div>
+												<label for="inputVerifyMobile" class="sr-only">Verify Mobile</label>
+												<input type="text" id="input_verify_mobile" name="input_verify_mobile" class="form-control" placeholder="Enter Mobile Number">
+											</div>
+											<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="verify_mobile_status" class="error-status"></span></div>
+											<div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="verify_status" class="error-status"></span></div>
+											<button class="btn btn-lg btn-primary btn-block" type="submit">Verify</button>
+										</div>
+									</form>'.
+									/*  Fix END - 44  */
+						        .'</div>
+						    	<div class="login-modal-footer">
+			  						<div class="row">
+										<div class="col-xs-8 col-sm-8 col-md-8">
+											<i class="fa fa-lock icon"></i>
+											<a href="#forget" class="forgetpass-tab" data-toggle="tab"> Forgot password? </a>
+										</div>
+										<div class="col-xs-4 col-sm-4 col-md-4">
+											<i class="fa fa-sign-in icon"></i>
+											<a href="#signin" class="signin-tab" data-toggle="tab"> Sign In </a>
+										</div>
+				  					</div>
+			  			    	</div>
 					    	</div>
 					    	<div role="tabpanel" class="tab-pane text-center" id="forget">
 					    		&nbsp;&nbsp;
