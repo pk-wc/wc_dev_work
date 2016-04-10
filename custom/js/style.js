@@ -670,7 +670,15 @@ $( "#registerform" ).submit(function( event ) {
 				    	}
 				}
 				else{
-					location.reload();
+					/*
+					 *  CR 44
+					 *  - To show the OTP text box
+					 *  Fix BEGIN
+					 */
+					$("#reg_form").hide();
+					$("#reg_otp").show();
+					$("#input_verify_mobile").val(formData["input_mobile"]);
+					/*  Fix END - 44  */
 				}
 				},
 				error	: function(response){
@@ -682,6 +690,63 @@ $( "#registerform" ).submit(function( event ) {
 	return false;
             
 });
+
+/*
+ *  CR 44
+ *  - To verify OTP via AJAX
+ *  Fix BEGIN
+ */
+//function for verify otp form
+$( "#verifyotpform" ).submit(function( event ) {
+	var formData = {
+		"input_verify_mobile" : $("input[name=input_verify_mobile]").val(),
+		"input_otp" : $("input[name=input_otp]").val(),
+	};
+	$("#otp_status").empty();
+	//$("#input_code").removeClass("has-error");
+	
+	if(!formData["input_verify_mobile"]){
+		$("#input_verify_mobile").addClass("has-error");
+		$("#verify_mobile_status").html("Mobile no. is required.");
+	}else{
+		if(formData["input_verify_mobile"].length==10 && (formData["input_verify_mobile"].charAt(0)=="9" || formData["input_verify_mobile"].charAt(0)=="8" || formData["input_verify_mobile"].charAt(0)=="7")){
+			$("#input_verify_mobile").removeClass("has-error");
+			$("#verify_mobile_status").empty();
+		}else{
+			$("#input_verify_mobile").addClass("has-error");
+			$("#verify_mobile_status").html("Invalid Mobile Number!");
+		}
+	}
+
+	if(!formData["input_otp"]){
+		$("#input_otp").addClass("has-error");
+		$("#otp_status").html("Please provide a valid OTP");
+	}
+	
+	if(!$("#verify_mobile_status").html() && !$("#otp_status").html()){
+		$.ajax({
+			type        : "POST", 
+			url         : "verifyMobileOTP.php",
+			data        : formData,		    
+			success	: function(response){
+			data = JSON.parse(response);
+			if (!data.success) {
+			    	if(data.errors.submit){
+			    		$("#verify_status").html(data.errors.submit);
+			    	}
+			}
+			else{
+				location.reload();
+			}
+			},
+			error	: function(response){
+				alert("error");	
+			}  
+		});
+	}
+	return false;
+});
+/*  Fix END - 44  */
 
 //function for Parcel form
 function userParcels()
