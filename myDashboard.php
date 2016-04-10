@@ -23,13 +23,14 @@ echo '  <body>';
 showHeader("my_dashboard");
 loadLoginModal();
 echo ' <div id="content">';
+echo '    <div class="container">';
+checkPageMessages();
+echo '    </div>';
 if($wc_uid){
-	echo '    <div class="container">';
-	checkPageMessages();
-	echo '    </div>';
 	if(verifyUserProfile($wc_uid) == 0){
 		header("location: pendingProfile.php");
 	}
+}
 	$order_type = 0;
 	if(isset($_GET['order_type'])){
 		$order_type = mres_ss($_GET['order_type']);
@@ -83,11 +84,11 @@ if($wc_uid){
 	}else{
 			echo '    <li><a href="'.$_SERVER['PHP_SELF'].'?as_a=carrier">Journeys List</a></li>';
 	}
-  
+
   	echo '
 		   </ul>
 		   <div class="tab-content">';
-		
+
 	if(strstr($as_a, "sender")){
   		echo ' <div id="sender" class="tab-pane fade in active">';
   	}else{
@@ -177,8 +178,12 @@ if($wc_uid){
 			echo '							<label style="font-weight: normal;">'.$row['price'].'</label> bucks';
 			echo '						</div>';
                         echo '					<div style="text-align:center">';
-			
+
+			if($wc_uid){
 			echo '					<span style="margin-right: 5px;"><a href="myRequests.php?as_a=carrier&oid='.$row['order_id'].'"><button type="button" class="btn btn-xs btn-info">I am interested in carrying this Parcel</button></a></span>';
+			}else{
+			echo '					<span style="margin-right: 5px;"><button type="button" class="btn btn-xs btn-info" href="#loginModal" data-target="#loginModal" data-toggle="modal">I am interested in carrying this Parcel</button></span>';
+			}
 				//echo '					<span style="margin-right: 5px;"><button type="button" class="btn btn-xs btn-info">Wanna Carry?</button></span>';
 				//echo '					<span style="margin-right: 5px;"><button type="button" class="btn btn-xs btn-info">Have a Chat</button></span>';
 			echo '					</div>';
@@ -200,14 +205,14 @@ if($wc_uid){
 		echo ' <div id="carrier" class="tab-pane fade">';
 	}
 	echo '				<div class="panel panel-primary">';
-	
+
  	echo '					<div class="panel-body" style="padding: 0px;">';
 	echo '						<div style="padding: 5px; border-bottom: 1px solid #009688;">';
 	echo '							<form action="" method="post">';
-	echo '							<div class="row">';	
+	echo '							<div class="row">';
 	echo '									<div class="col-xs-12 col-md-4 ui-widget" style="margin-bottom:2px">';
 	echo '										<input type="text" name="input_journey_source_pincode_search" value="'.$input_journey_source_pincode_search.'" id="pincode2" class="form-control" placeholder="Source Pincode" onkeyup="showPincode()">';
-	echo '									</div>';					
+	echo '									</div>';
 	echo '									<div class="col-xs-12 col-md-4 ui-widget" style="margin-bottom:2px">';
 	echo '									<input type="text" name="input_journey_destination_pincode_search" id="pincode3" value="'.$input_journey_destination_pincode_search.'" class="form-control" placeholder="Destination Pincode" onkeyup="showPincode()">';
 	echo '									</div>';
@@ -286,15 +291,19 @@ if($wc_uid){
 			echo '							<label style="font-weight: normal;">'.$row['notes'].'</label>';
 			echo '						</div>';
                         echo '                                          <div align="center">';
-			
-				echo '					<span style="margin-right: 5px;"><a href="myRequests.php?as_a=sender&jid='.$row['journey_id'].'"><button type="button" class="btn btn-xs btn-info">Request for a Parcel Delivery</button></a></span>';
+
+												if($wc_uid){
+													echo '					<span style="margin-right: 5px;"><a href="myRequests.php?as_a=sender&jid='.$row['journey_id'].'"><button type="button" class="btn btn-xs btn-info">Request for a Parcel Delivery</button></a></span>';
+												}else{
+													echo '					<span style="margin-right: 5px;"><button type="button" class="btn btn-xs btn-info"  href="#loginModal" data-target="#loginModal" data-toggle="modal">Request for a Parcel Delivery</button><span>';
+												}
 				//echo '					<span style="margin-right: 5px;"><button type="button" class="btn btn-xs btn-info">Request a Delivery</button></span>';
 				//echo '					<span style="margin-right: 5px;"><button type="button" class="btn btn-xs btn-info">Have a Chat</button></span>';
 			echo '					        </div>';
-			echo '					</div>';				
+			echo '					</div>';
 			echo '				</div>';
 			echo '			</div>';
-}	
+}
 }else{
 		echo '					<div style="margin: 10px 0px 10px 0px; font-weight: bold; color: silver; text-align: center;">';
 		echo '						Oops! No Orders found in this region';
@@ -307,9 +316,6 @@ if($wc_uid){
 
 
 echo ' </div>';
-}else{
-header("location: index.php");
-}
 echo ' </div>';
 showFooter();
 loadLaterJSFiles();
