@@ -227,9 +227,9 @@ function showHeader($page){
 			echo '            <li><a href="aboutUs.php">About Us</a></li>';
 		}
 		if(strstr($page, "contactUs")){
-			echo '            <li class="active"><a href="contactUs.php">Contact Us</a></li>';
+			echo '            <li class="active"><a href="contactUs.php">Contact</a></li>';
 		}else{
-			echo '            <li><a href="contactUs.php">Contact Us</a></li>';
+			echo '            <li><a href="contactUs.php">Contact</a></li>';
 		}
 		if(!$wc_uid)
 			echo '            <li id="loginLink"><a href="#loginModal" data-target="#loginModal" data-toggle="modal">LOGIN/SIGNUP</a></li>';
@@ -250,9 +250,9 @@ function showFooter(){
 	echo '      <div class="container">
 			<div class="row">
 				<div class="col-md-4 col-lg-4 col-xs-12">
-					<p style="color:#fff">Copyright &copy; 2016 WEcarriers . All rights Reserved .</p>
+					Copyright &copy; 2016 WEcarriers . All rights Reserved .
 				</div>
-				<div class="col-md-3 col-lg-4 col-xs-12 text-center">
+				<div class="col-md-3 col-lg-4 col-xs-12 small-device-padding">
 					<a style="color:#fff" href="#"><i class="fa fa-3x fa-facebook-square"></i></a>
 					<a style="color:#fff" href="#"><i class="fa fa-3x fa-twitter-square"></i></a>
 					<a style="color:#fff" href="#"><i class="fa fa-3x fa-instagram"></i></a>
@@ -261,7 +261,7 @@ function showFooter(){
 				</div>
 				<div class="col-md-5 col-lg-4 col-xs-12">
 					<a style="color:#fff" href="privacy.php">Privacy</a>  &#124  <a style="color:#fff" href="terms.php">Terms</a>
-					  &#124  <a style="color:#fff" href="aboutUs.php">About Us</a>  &#124  <a style="color:#fff" href="contactUs.php">Contact Us</a>
+					  &#124  <a style="color:#fff" href="aboutUs.php">About Us</a>  &#124  <a style="color:#fff" href="contactUs.php">Contact</a>
 					    &#124  <a style="color:#fff" href="how_it_works.php">How It Works</a>
 				</div>
 			</div>

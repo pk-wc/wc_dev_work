@@ -27,153 +27,178 @@ echo '<div class="container">';
 checkPageMessages();
 echo '    </div>';
 
-echo '  <div class="">';
-echo '			<div class="row">';
-echo '        <div class="jumbotron" style="margin-bottom:0px">';
-echo '  				<div class="container">';
-echo '          <h1>Some Video / Our Moto</h1>';
-echo '          <p>SHARE <> CARRY <> EARN</p>';
-echo '					</div>';
-echo '        </div>';
-echo '			</div>';
-//here each media is of size 64 by 64px
-
-echo '
-			<section id="how_it_works">
-				 <h2 style="margin-bottom: 40px;">HOW IT WORKS?</h2>
-				 	<div class="container">
-						 <ul class="nav nav-tabs" role="tablist" style="text-align: center;">
-						 	<li role="presentation" style="width: 50%;" class="active"><a aria-controls="wesender" role="tab" data-toggle="tab" href="#wesender">Do You Want to send the Parcel? (Become WeSender)</a></li>
-							<li role="presentation" style="width: 50%;"><a aria-controls="wecarrier" role="tab" data-toggle="tab" href="#wecarrier">Do You Want to carry the Parcel? (Become WeCarrier)</a></li>
-						 </ul>
-						 <div class="tab-content">
-						 	<div role="tabpanel" class="col-lg-6 col-sm-6 col-md-6 col-xs-12 tab-pane fade in active" id="wesender">
-								 <p>Find a trustworthy WeCarrier and save money.</p>
-								 <ul class="media-list">
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/details.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Enter Parcel details:</h4>
-											 <ul>
-												 <li>Source and Destination place</li>
-												 <li>Required Delivery date</li>
-												 <li>Weight and Dimensions of the parcel</li>
-												 <li>Price you want to quote</li>
-											 </ul>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/search.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Find the WeCarrier:</h4>
-											 <p>Based on details entered, find a suitable WeCarrier. Take a look at reviews, comments and information about the WeCarrier.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/contact.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Get In Contact:</h4>
-											 <p>Get in touch with your selected WeCarrier and finalize the delivery date, time, place, and parcel delivery charges. Also confirm the delivery time and place to the end Receiver.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/collect_parcel.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Handover Parcel and Pay Money:</h4>
-											 <p>Be at your planned time and place to hand over the parcel and pay the money to the WeCarrier. Ensure that you bring exact change to pay, as agreed earlier. Avoid meeting at suspicious locations.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/review.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Review the WeCarrier:</h4>
-											 <p>Don’t forget to review the WeCarrier after the scheduled delivery is complete. Your review will help other users and you too in future to pick the best.</p>
-										 </div>
-									 </li>
-								 </ul>
-						 	 </div>
-						 	<div role="tabpanel" class="tab-pane fade col-lg-6 col-sm-6 col-md-6 col-xs-12 pull-right" id="wecarrier">
-								 <p>Find a suitable Parcel and save money on your travel.</p>
-								 <ul class="media-list">
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/details.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Enter Journey details:</h4>
-											 <ul>
-												 <li>Source and Destination place</li>
-												 <li>Journey date</li>
-												 <li>Preferable Weight of the parcel you can carry</li>
-												 <li>Price you want to quote</li>
-											 </ul>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/select_parcel.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Select the Parcel:</h4>
-											 <p>Based on requests received, find the suitable and convenient parcel. Take a look at reviews, comments and information about that WeSender.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/contact.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Get In Contact:</h4>
-											 <p>Get in touch with your selected WeSender when they contact you and finalize about the pickup date, time, place and parcel delivery charges. Also confirm the delivery time and place to the end Receiver.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/collect_parcel.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Collect Parcel and Money:</h4>
-											 <p>Reach the source point at your planned time. Your WeSender will pay the agreed amount for the safe and assured delivery of the parcel. It might be useful to have a bit of change with you. Avoid meeting at suspicious locations.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/deliver_parcel.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Deliver the Parcel to Receiver:</h4>
-											 <p>Deliver the parcel to the end receiver at the destination place on pre-defined time. Avoid meeting at suspicious locations.</p>
-										 </div>
-									 </li>
-									 <li class="media">
-										 <a class="pull-left" href="#">
-											 <img class="media-object" src="custom/images/review.png" alt="Enter The Details!">
-										 </a>
-										 <div class="media-body">
-											 <h4 class="media-heading">Review the WeSender:</h4>
-											 <p>Don’t forget to review the WeSender after the scheduled delivery is complete. Your review will help other users and you too in future to pick the best.</p>
-										 </div>
-									 </li>
-								 </ul>
-						 	 </div>
-							</div>
-
-	       	</div>
-				
-			</section>
-';
-
+echo '  <div class="jumbotron"  style="margin-bottom:0px;border-bottom:1px solid #009688">';
+echo '  	<div class="container">';
+echo '          	<h1>Some Video / Our Moto</h1>';
+echo '          	<p>SHARE <> CARRY <> EARN</p>';
+echo '        	</div>';
 echo '	</div>';
+
+echo '<section id="how_it_works">
+	<h2>HOW IT WORKS?</h2>
+	<div class="container">';
+	$as_a = "wesender";
+	if(isset($_GET['as_a'])){
+		$as_a = mres_ss($_GET['as_a']);
+	}
+	if(strstr($as_a, "wesender")){
+	echo '<h3 id="become_wesender_text">Do you have Parcel to send? Find a trustworthy WEcarrier and save money.</h3>';
+	}else{
+	echo '<h3 id="become_wecarrier_text">Are you going somewhere? Carry a suitable Parcel and earn money.</h3>';
+	}
+	echo '<div role="tabpanel" class="work-tab">
+	  	<!-- Nav tabs -->
+	  	<ul class="nav nav-tabs" role="tablist" style="width:100%;">';
+	  	if(strstr($as_a, "wesender")){
+		echo '    <li class="active" style="width:50%;"><a href="'.$_SERVER['PHP_SELF'].'?"><span style="margin-right:5px;"><i class="fa fa-suitcase"></i></span>Become WEsender</a></li>';
+		}else{
+		echo '    <li style="width:50%;"><a href="'.$_SERVER['PHP_SELF'].'?as_a=wesender"><span style="margin-right:5px;"><i class="fa fa-suitcase"></i></span>Become WEsender</a></li>';
+		}
+		if(strstr($as_a, "wecarrier")){
+		echo '    <li class="active" style="width:50%;"><a href="'.$_SERVER['PHP_SELF'].'?as_a=wecarrier"><span style="margin-right:5px;"><i class="fa fa-motorcycle"></i></span>Become WEcarrier</a></li>';
+		}else{
+		echo '    <li style="width:50%;"><a href="'.$_SERVER['PHP_SELF'].'?as_a=wecarrier"> <span style="margin-right:5px;"><i class="fa fa-motorcycle"></i></span>Become WEcarrier</a></li>';
+		}
+	echo '
+	  	</ul>
+	  	<div class="tab-content">';
+		if(strstr($as_a, "wesender")){
+	  	echo ' <div role="tabpanel" class="tab-pane fad in active" id="wesender">';
+	  	}else{
+		echo ' <div role="tabpanel" class="tab-pane fad" id="wesender">';
+		}
+	
+	
+	echo '			<div class="row">
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-right">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse" style="font-size:64px"></i>
+						</span>
+						<h4 style="color:#009688;text-align:right">Enter Parcel detail</h4>
+						<ul class="detail_right">
+							 <li>Pickup and Delivery address</li>
+							 <li>Expected Delivery date</li>
+							 <li>Weight and Dimensions of the parcel</li>
+							 <li>Quote your Price</li>
+						 </ul>
+					</div>
+					
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-left">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-search fa-stack-1x fa-inverse" style="font-size:60px"></i>
+						</span>
+						<h4 style="color:#009688;text-align:left">Find WEcarrier</h4>
+						<p>Based on your Parcel detail entered, find a suitable WEcarrier. Take a look at reviews, comments and information about the WEcarrier.</p>
+					</div>
+					
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-right">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-mobile fa-stack-1x fa-inverse"></i>
+						</span>
+						<h4 style="color:#009688;text-align:right">Contact WEcarrier</h4>
+						<p>Get in touch with your selected WEcarrier and finalize the delivery date, time, place, and parcel delivery charges. Also confirm the delivery time and place to the end Receiver.</p>
+					</div>
+					
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-left">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <span class="work-span">
+							  <i class="fa fa-suitcase fa-inverse work-icon" style="font-size:32px;"></i><i class="fa fa-plus fa-inverse work-icon" style="font-size:16px;"></i><i class="fa fa-inr fa-inverse work-icon" style="font-size:32px;"></i>  
+						  </span>
+						</span>
+						<h4 style="color:#009688;text-align:left">Handover Parcel and Pay Money</h4>
+						<p>Be at your planned time and place to hand over the parcel and pay the money to the WEcarrier. Ensure that you bring exact change to pay, as agreed earlier. Avoid meeting at suspicious locations.</p>
+					</div>
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-right">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <span class="work-span">
+							  <i class="fa fa-star-o fa-inverse work-icon" style="font-size:32px;"></i><i class="fa fa-star-o fa-inverse work-icon" style="font-size:32px;"></i><i class="fa fa-star-o fa-inverse work-icon" style="font-size:32px;"></i>  
+						  </span>
+						</span>
+						<h4 style="color:#009688;text-align:right">Review WEcarrier</h4>
+						<p>Don’t forget to review the WEcarrier after the scheduled delivery is complete. Your review will help other users and you too in future to pick the best.</p>
+					</div>
+					
+				</div>	
+		</div>';
+	       if(strstr($as_a, "wecarrier")){
+	       echo ' <div role="tabpanel" class="tab-pane fad in active" id="wecarrier">';
+	       }else{
+	       echo ' <div role="tabpanel" class="tab-pane fad" id="wecarrier">';
+	       }
+	       echo '			<div class="row">
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-right">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse" style="font-size:64px"></i>
+						</span>
+						<h4 style="color:#009688;text-align:right">Enter Journey detail</h4>
+						<ul class="detail_right">
+							 <li>Source and Destination address</li>
+							 <li>Journey date</li>
+							 <li>Preferable Weight of the parcel you can carry</li>
+							 <li>Quote your Price</li>
+						 </ul>
+					</div>
+					
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-left">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-search fa-stack-1x fa-inverse" style="font-size:60px"></i>
+						</span>
+						<h4 style="color:#009688;text-align:left">Find Parcel</h4>
+						<p>Based on your journey detail entered, find the suitable and convenient parcel. Take a look at reviews, comments and information about that WEsender</p>
+					</div>
+					
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-right">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-mobile fa-stack-1x fa-inverse"></i>
+						</span>
+						<h4 style="color:#009688;text-align:right">Contact WEsender</h4>
+						<p>Get in touch with your selected WEsender when they contact you and finalize about the pickup date, time, place and parcel delivery charges. Also confirm the delivery time and place to the end Receiver.</p>
+					</div>
+					
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-left">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <span class="work-span">
+							  <i class="fa fa-suitcase fa-inverse work-icon" style="font-size:32px;"></i><i class="fa fa-plus fa-inverse work-icon" style="font-size:16px;"></i><i class="fa fa-inr fa-inverse work-icon" style="font-size:32px;"></i>
+							  
+						  </span>
+						</span>
+						<h4 style="color:#009688;text-align:left">Collect Parcel and Money</h4>
+						<p>Reach the source point at your planned time. Your WEsender will pay the agreed amount for the safe and assured delivery of the parcel. It might be useful to have a bit of change with you. Avoid meeting at suspicious locations.</p>
+					</div>
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-right">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <i class="fa fa-truck fa-flip-horizontal fa-stack-1x fa-inverse"></i>
+						</span>
+						<h4 style="color:#009688;text-align:right">Deliver Parcel</h4>
+						<p>Deliver the parcel to the end receiver at the destination place on pre-defined time. Avoid meeting at suspicious locations.</p>
+					</div>
+					<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+						<span class="fa-stack fa-5x fa-pull-left">
+						  <i class="fa fa-circle fa-stack-2x" style="color:#009688"></i>
+						  <span class="work-span">
+							  <i class="fa fa-star-o fa-inverse work-icon" style="font-size:32px;"></i><i class="fa fa-star-o fa-inverse work-icon" style="font-size:32px;"></i><i class="fa fa-star-o fa-inverse work-icon" style="font-size:32px;"></i>  
+						  </span>
+						</span>
+						<h4 style="color:#009688;text-align:left">Review WEsender</h4>
+						<p>Don’t forget to review the WEsender after the scheduled delivery is complete. Your review will help other users and you too in future to pick the best.</p>
+					</div>
+					
+				</div>	
+		</div>';
+	echo '</div>
+	</div>
+</section>
+';
 echo '</div>';
 showFooter();
 loadLaterJSFiles();
