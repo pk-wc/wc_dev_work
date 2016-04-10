@@ -28,7 +28,7 @@ checkPageMessages();
 echo '    </div>';
 if($wc_uid){
 	if(verifyUserProfile($wc_uid) == 0){
-		header("location: pendingProfile.php");
+		//code for profile not completed
 	}
 }
 	$order_type = 0;
