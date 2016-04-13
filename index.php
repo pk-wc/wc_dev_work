@@ -71,8 +71,8 @@ echo ' <div id="content">';
 		echo ' <div role="tabpanel" class="tab-pane fad" id="wecarrier">';
 	}
 	echo '
-		    		&nbsp;&nbsp;	
-		    		<form onsubmit="return sendWecarrierToDashboard()">			 
+		    		&nbsp;&nbsp;
+		    		<form onsubmit="return sendWecarrierToDashboard()">
 				      <div class="row">
 				      	<div class="col-xs-12">
 				      		<div class="text-center floating-label-form-group">
@@ -96,8 +96,8 @@ echo ' <div id="content">';
 		echo ' <div role="tabpanel" class="tab-pane fad" id="wesender">';
 	}
 	echo '
-		    		&nbsp;&nbsp;	
-		    		<form onsubmit="return sendWesenderToDashboard()">			
+		    		&nbsp;&nbsp;
+		    		<form onsubmit="return sendWesenderToDashboard()">
 				      <div class="row">
 				      	<div class="col-xs-12">
 				      		<div class="text-center floating-label-form-group">
@@ -129,11 +129,11 @@ echo ' <div id="content">';
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
 					<div id="round_div"><span><i class="fa fa-pencil-square-o fa-4x"></i></span></div>
-					
+
 					<h4>Enter Parcel Detail</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-20px;margin-right:-40px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
-					
+
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
 					<div id="round_div"><span><i class="fa fa-search fa-4x"></i></span></div>
 					<h4>Find WEcarrier</h4>
@@ -145,13 +145,13 @@ echo ' <div id="content">';
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-20px;margin-right:-40px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-suitcase fa-2x"></i> <i class="fa fa-plus fa-1x"> </i><i class="fa fa-inr fa-2x"></i></span></div>
 					<h4>Handover Parcel and Pay Money</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-20px;margin-right:-40px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star-o fa-2x"></i></span></div>
 					<h4>Review WEcarrier</h4>
 					</div>
@@ -161,42 +161,42 @@ echo ' <div id="content">';
 				</div>
 				<div class="row">
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-pencil-square-o fa-4x"></i></span></div>
 					<h4>Enter Journey Detail</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-40px;margin-right:-60px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-search fa-4x"></i></span></div>
 					<h4>Find Parcel</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-40px;margin-right:-60px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-mobile fa-5x"></i></span></div>
 					<h4>Contact WEsender</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-40px;margin-right:-60px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-suitcase fa-2x"></i> <i class="fa fa-plus fa-1x"> </i><i class="fa fa-inr fa-2x"></i></span></div>
 					<h4>Collect Parcel and Money</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-40px;margin-right:-60px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px">
-					
+
 					<div id="round_div"><span><i class="fa fa-truck fa-flip-horizontal fa-4x"></i></span></div>
 					<h4>Deliver Parcel</h4>
 					</div>
 					<div class="col-md-1 hide-fa-vertical" style="color:#009688;padding-top:50px;margin-left:-40px;margin-right:-60px"><span><i class="fa fa-chevron-right fa-4x"></i></span></div>
 					<div class="col-md-2 col-xs-12 text-center" style="margin-top:20px;">
-					
+
 					<div id="round_div"><span><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star-o fa-2x"></i></span></div>
 					<h4>Review WEsender</h4>
 					</div>
 				</div>
-				
+
 			</div>
 		</section>';
 	echo '	<section id="what_we_do">
@@ -206,7 +206,7 @@ echo ' <div id="content">';
 								<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
 									<span class="fa-stack fa-5x fa-pull-right">
 									  <i class="fa fa-circle fa-stack-2x" style="color:#eee"></i>
-									  <i class="fa fa-inr fa-stack-1x"></i>
+									  <i class="fa fa-inr horizontal-flip fa-stack-1x"></i>
 									</span>
 									<h3 style="color:#009688;text-align:right">Earn More</h3>
 									<p>WEcarrier will earn in form of cash for carrying Parcels and WEsender will earn by saving a lot.</p>
@@ -214,38 +214,38 @@ echo ' <div id="content">';
 								<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
 									<span class="fa-stack fa-5x fa-pull-left">
 									  <i class="fa fa-circle fa-stack-2x" style="color:#eee"></i>
-									  <i class="fa fa-trophy fa-stack-1x"></i>
+									  <i class="fa fa-trophy vertical-flip fa-stack-1x"></i>
 									</span>
 									<h3 style="color:#009688;text-align:left">Fayde ka Sauda</h3>
 									<p>For WEsender, lesser time and Lesser money spend for Parcels. For WEcarrier, more money Earned while travelling.</p>
 								</div>
-								
+
 							</div>
 							<div class="row">
 								<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
 									<span class="fa-stack fa-5x fa-pull-right">
 									  <i class="fa fa-circle fa-stack-2x" style="color:#eee"></i>
-									  
-									  <i class="fa fa-rocket fa-stack-1x"></i>
+
+									  <i class="fa fa-rocket diagonal-translation fa-stack-1x"></i>
 									</span>
 									<h3 style="color:#009688;text-align:right">Best and Quickest</h3>
 									<p>No wait for bulk parcels, no multiple warehouse transition of Parcels. Just share, care and deliver.</p>
 								</div>
-								
+
 								<div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
 									<span class="fa-stack fa-5x fa-pull-left">
 									  <i class="fa fa-circle hello fa-stack-2x" style="color:#eee"></i>
-									  <i class="fa fa-cogs fa-stack-1x"></i>
+									  <i class="fa fa-cogs rotate-360 fa-stack-1x"></i>
 									</span>
 									<h3 style="color:#009688;text-align:left">Easy Process</h3>
 									<p>Hasle free process, Smart people, More choices and better than "the" conventional methods of parcelling.</p>
 								</div>
-								
+
 							</div>
 						</div>
 		</section>';
-	
-	
+
+
 echo ' </div>';
 showFooter();
 loadLaterJSFiles();

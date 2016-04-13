@@ -1,7 +1,15 @@
-/*
- * Base structure
- */
-
+@media screen and (max-width:786px){
+	.dashboard-search{
+		margin-top:10px;
+		text-align:center;
+	}
+	.all-padding{
+		padding:2px!important;
+	}
+}
+.all-padding{
+	padding:0 20px 2px 20px;
+}
 /*panel*/
 .panel{
 	border-color:#009688 !important;
@@ -35,13 +43,20 @@
 
 
 .nav-tabs{
-  background-color:#b2dfdb;
+	border-bottom: 1px solid var(--main-color);
 }
-
+.tab-content{
+	border-left:1px solid var(--main-color);
+	border-bottom:1px solid var(--main-color);
+	border-right:1px solid var(--main-color);
+	padding-left:20px;
+	padding-right:20px;
+}
 .nav-tabs > li > a{
-  border: medium none;
-  color: #000;
-  font-size: 14px;
+  font-size: 22px;
+  font-weight:bold;
+  color:#666666;
+  text-align:center;
 }
 .nav-tabs > li > a:hover{
   background-color: #FAC106 !important;
@@ -52,8 +67,12 @@
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:focus,
 .nav-tabs > li.active > a:hover{
-    background-color: #00796b !important;
-    color:#fff;
+    color:#009688;
+    background-color:transparent;
+    border-left:1px solid var(--main-color);
+    border-right:1px solid var(--main-color);
+    border-top:1px solid var(--main-color);
+    border-bottom:1px solid var(--off-color);
 }
 
 /*btn-link*/
@@ -100,7 +119,7 @@
 		0px 1px 0px rgba(255,255,255,0.3);
 }
 .btn-primary:hover{
-	
+
 	font-size: 14px;
 	color: #000;
 	padding: 10px 20px;
@@ -170,7 +189,7 @@
 }
 
 .dash .btn-primary:hover {
-	
+
 	font-size: 12px;
 	color: #000;
 	padding: 8px 16px;

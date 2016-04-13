@@ -1,6 +1,6 @@
 html,body{
 	min-height: 100%;
-	padding:0; 
+	padding:0;
 	margin:0;
 	max-width: 100%;
 }
@@ -11,11 +11,11 @@ html,body{
   --off-color: #fff;
 }
 #wrapper{
-	padding:50px 0px 100px 0px; 
-	position:absolute; 
-	top:0; 
-	bottom:0; 
-	left:0; 
+	padding:50px 0px 100px 0px;
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
 	right:0;
 }
 
@@ -63,7 +63,7 @@ p{
 	border-color: red;
 }
 .bottom-error{
-	border-bottom: 2px solid #red;
+	border-bottom: 2px solid #ff0000!important;
 }
 .error-status{
 	color:red;font-size:12px;
@@ -79,28 +79,35 @@ p{
 		height:400px;
 	}
 	#search_wesender_text,#search_wecarrier_text{
-		
+
 	}
 }
+.search-tab{
+	margin: 0 auto;
+	max-width: 380px;
+}
 .search-tab .nav-tabs{
-  background-color:transparent;
-  text-align:center;
+  border-bottom: 1px solid #fff;
+}
+.search-tab .nav-tabs > li > a:hover{
+	color:var(--on-color);
 }
 .search-tab .nav-tabs li a{
   font-weight:bold;
   font-size:22px!important;
 }
-.search-tab .nav-tabs > li > a:hover{
-  background-color: var(--accent-color) !important;
-  border-radius: 0;
-  color:var(--on-color);
-}
 .search-tab .nav-tabs > li.active > a,.search-tab .nav-tabs > li.active > a:focus,.search-tab .nav-tabs > li.active > a:hover{
     background-color: transparent !important;
-    color:#4cb5ab;
+    color:#4cb5ab!important;
+    border-left:1px solid var(--off-color)!important;
+    border-right:1px solid var(--off-color)!important;
+    border-top:1px solid var(--off-color)!important;
+    border-bottom:transparent;
 }
 .search-tab .tab-content{
-	border:1px solid var(--off-color);
+	border-left:1px solid var(--off-color);
+	border-bottom:1px solid var(--off-color);
+	border-right:1px solid var(--off-color);
 	padding-left:20px;
 	padding-right:20px;
 	padding-bottom:20px;
@@ -114,7 +121,6 @@ p{
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
-
 /*animation on hover*/
 .enlarge{
 	 transform:         scale(1.5); /* CSS3 */
@@ -123,48 +129,48 @@ p{
 	 -o-transform:      scale(1.5); /* Opera */
 	 -ms-transform:     scale(1.5); /* IE 9 */
 }
-.fa-rocket:hover{
+.diagonal-translation:hover{
 		transform: translate(10px,-10px);
 		-webkit-transform: translate(10px,-10px);
-		-o-transform: translate(10px,-10px); 
+		-o-transform: translate(10px,-10px);
 		-moz-transform: translate(10px,-10px);
 }
 
 @keyframes rotatingy{
-    from {     
+    from {
     	 transform:         rotateY(0deg); /* CSS3 */
 	 -moz-transform:    rotateY(0deg); /* Firefox */
 	 -webkit-transform: rotateY(0deg); /* Webkit */
 	 -o-transform:      rotateY(0deg)); /* Opera */
 	 -ms-transform:     rotateY(0deg); /* IE 9 */
     }
-    to   { 
+    to   {
     	 transform:         rotateY(-360deg); /* CSS3 */
 	 -moz-transform:    rotateY(-360deg); /* Firefox */
 	 -webkit-transform: rotateY(-360deg); /* Webkit */
 	 -o-transform:      rotateY(-360deg)); /* Opera */
-	 -ms-transform:     rotateY(-360deg); /* IE 9 */ 
-    
+	 -ms-transform:     rotateY(-360deg); /* IE 9 */
+
     }
 }
 @-webkit-keyframes rotatingy{
-    from {     
+    from {
     	 transform:         rotateY(0deg); /* CSS3 */
 	 -moz-transform:    rotateY(0deg); /* Firefox */
 	 -webkit-transform: rotateY(0deg); /* Webkit */
 	 -o-transform:      rotateY(0deg)); /* Opera */
 	 -ms-transform:     rotateY(0deg); /* IE 9 */
     }
-    to   { 
+    to   {
     	 transform:         rotateY(-360deg); /* CSS3 */
 	 -moz-transform:    rotateY(-360deg); /* Firefox */
 	 -webkit-transform: rotateY(-360deg); /* Webkit */
 	 -o-transform:      rotateY(-360deg)); /* Opera */
-	 -ms-transform:     rotateY(-360deg); /* IE 9 */ 
-    
+	 -ms-transform:     rotateY(-360deg); /* IE 9 */
+
     }
 }
-.fa-inr:hover{
+.horizontal-flip:hover{
 	 animation:          rotatingy 2s linear infinite; /* CSS3 */
 	 -moz-animation:     rotatingy 2s linear infinite; /* Firefox */
 	 -webkit-animation:  rotatingy 2s linear infinite; /* Webkit */
@@ -172,47 +178,47 @@ p{
 	 -ms-animation:      rotatingy 2s linear infinite; /* IE 9 */
 }
 @keyframes rotatingx{
-    from {     
+    from {
     	 transform:         rotateX(0deg); /* CSS3 */
 	 -moz-transform:    rotateX(0deg); /* Firefox */
 	 -webkit-transform: rotateX(0deg); /* Webkit */
 	 -o-transform:      rotateX(0deg)); /* Opera */
 	 -ms-transform:     rotateX(0deg); /* IE 9 */
     }
-    to   { 
+    to   {
     	 transform:         rotateX(-360deg); /* CSS3 */
 	 -moz-transform:    rotateX(-360deg); /* Firefox */
 	 -webkit-transform: rotateX(-360deg); /* Webkit */
 	 -o-transform:      rotateX(-360deg)); /* Opera */
-	 -ms-transform:     rotateX(-360deg); /* IE 9 */ 
-    
+	 -ms-transform:     rotateX(-360deg); /* IE 9 */
+
     }
 }
 @-webkit-keyframes rotatingx{
-    from {     
+    from {
     	 transform:         rotateX(0deg); /* CSS3 */
 	 -moz-transform:    rotateX(0deg); /* Firefox */
 	 -webkit-transform: rotateX(0deg); /* Webkit */
 	 -o-transform:      rotateX(0deg)); /* Opera */
 	 -ms-transform:     rotateX(0deg); /* IE 9 */
     }
-    to   { 
+    to   {
     	 transform:         rotateX(-360deg); /* CSS3 */
 	 -moz-transform:    rotateX(-360deg); /* Firefox */
 	 -webkit-transform: rotateX(-360deg); /* Webkit */
 	 -o-transform:      rotateX(-360deg)); /* Opera */
-	 -ms-transform:     rotateX(-360deg); /* IE 9 */ 
-    
+	 -ms-transform:     rotateX(-360deg); /* IE 9 */
+
     }
 }
-.fa-trophy:hover{
+.vertical-flip:hover{
 	 animation:          rotatingx 2s linear infinite; /* CSS3 */
 	 -moz-animation:     rotatingx 2s linear infinite; /* Firefox */
 	 -webkit-animation:  rotatingx 2s linear infinite; /* Webkit */
 	 -o-animation:       rotatingx 2s linear infinite; /* Opera */
 	 -ms-animation:      rotatingx 2s linear infinite; /* IE 9 */
 }
-.fa-cogs:hover{
+.rotate-360:hover{
 	 animation:          fa-spin 2s linear infinite; /* CSS3 */
 	 -moz-animation:     fa-spin 2s linear infinite; /* Firefox */
 	 -webkit-animation:  fa-spin 2s linear infinite; /* Webkit */
@@ -242,9 +248,8 @@ p{
     color:var(--main-color);
 }
 
-.login-tab {
-	margin: 0 auto;
-	max-width: 380px;
+.login-tab .tab-content{
+	border:none;
 }
 .login-modal-header {
 	background: var(--main-color);
@@ -267,7 +272,7 @@ p{
 
 .login-modal form {
 	max-width: 340px;
-	
+
 }
 
 .tab-pane form {
@@ -282,7 +287,7 @@ p{
 	color: var(--main-color);
 }
 /*round division*/
-#round_div{    
+#round_div{
 	width:120px;
 	height:120px;
 	background-color:var(--main-color);
@@ -358,7 +363,7 @@ p{
 }
 #progressbar li:first-child:after {
 	/*connector not needed before the first step*/
-	content: none; 
+	content: none;
 }
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
@@ -417,6 +422,25 @@ p{
     resize: none;
 }
 
+.floating-label-form-group select {
+    z-index: 1;
+    position: relative;
+    padding-right: 0;
+    padding-left: 0;
+    border: 0;
+    border-radius: 0;
+    font-size: 1.5em;
+    width:100%;
+    background: 0;
+    box-shadow: none!important;
+    resize: none;
+    outline:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
 .floating-label-form-group::not(:first-child) {
     padding-left: 14px;
     border-left: 1px solid #eee;
@@ -462,10 +486,10 @@ hr.star-primary:after {
 {
     background: #eee;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 @media screen and (max-width:786px){
 	.ui-widget-content {
@@ -529,19 +553,42 @@ a.clickable { color: inherit; }
 a.clickable:hover { text-decoration:none; }
 
 /*modal*/
- 
-@media screen and (min-width: 768px){
-	.login_modal .modal-dialog,.reg_modal .modal-dialog {
-	  width: 350px; /* New width for default modal */
-	}
+
+.modal {
+  text-align: center;
 }
 
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+	.modal-dialog {
+	  width: 95%;
+	}
+}
+.login-tab {
+	margin: 0 auto;
+	max-width: 380px;
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+
+/*horizontal line*/
 hr {
     display: block;
     height: 1px;
     border: 0;
     border-top: 1px solid var(--accent-color);
-    margin: 1em 0; 
+    margin: 1em 0;
 }
 
 /*Navbar-header*/
@@ -592,30 +639,10 @@ hr {
 	vertical-align: middle;
 	margin-right:2px
 }
-.work-tab .nav-tabs{
-  background-color:transparent;
-  text-align:center;
-}
-.work-tab .nav-tabs li a{
-  font-weight:bold;
-  font-size:22px!important;
-}
-.work-tab .nav-tabs > li > a:hover{
-  background-color: var(--accent-color) !important;
-    border-radius: 0;
-    color:var(--on-color);
-}
 .work-tab .nav-tabs > li.active > a,.search-tab .nav-tabs > li.active > a:focus,.search-tab .nav-tabs > li.active > a:hover{
-    background-color: transparent !important;
-    color:#009688;
-    border:1px solid var(--main-color);
+    border-bottom:1px solid #eee;
 }
-.work-tab .tab-content{
-	border:1px solid var(--main-color);
-	padding-left:20px;
-	padding-right:20px;
-	padding-bottom:20px;
-}
+
 #become_wesender_text,#become_wecarrier_text{
 	color:var(--main-color);
 	padding:20px 0 10px 0;

@@ -4,6 +4,294 @@ $(function() {
     {dateFormat: 'yy-mm-dd'});
   });
 
+  //function for Bank-info in redeem modal
+  function showBank(){
+      if (document.getElementById('ifsc').checked) {
+          $('.ifsc').show();
+          $('.location').hide();
+      } else {
+          $('.ifsc').hide();
+          $('.location').show();
+      }
+  }
+  function checkIfsc(){
+  	var formData = {
+  		"ifsc" : $("input[name=bank_ifsc]").val()
+  	};
+  	$("#ifsc_status").empty();
+  	if(formData["ifsc"]){
+  		$.ajax({
+  	            type        : "POST",
+  	            url         : "checkIfsc.php",
+  	            data        : formData,
+  	            success	: function(response){
+  	            	data = JSON.parse(response);
+  	            	if (!data.success) {
+  		            	if(data.errors.ifsc){
+  		            		$("#bank_ifsc").parent().addClass("bottom-error");
+  		            		$("#bank_ifsc_status").html(data.errors.ifsc);
+  		            	}
+  		        }
+  		    }
+  	        });
+  	}
+          return false;
+
+  }
+  $(document).ready(function()
+  {
+  	$(".bank_name").change(function()
+  	{
+  		var formData = {
+  			"bank" : $(this).val(),
+  		}
+  		$.ajax
+  		({
+  			type: "POST",
+  			url: "get_state.php",
+  			data: formData,
+  			cache: false,
+  			success: function(response)
+  			{
+  				$(".bank_state").html(response);
+  			}
+  		});
+  	});
+
+  	$(".bank_state").change(function()
+  	{
+  		var formData = {
+  			"bank" : $(".bank_name").val(),
+  			"state" : $(this).val()
+  		}
+  		$.ajax
+  		({
+  			type: "POST",
+  			url: "get_city.php",
+  			data: formData,
+  			cache: false,
+  			success: function(response)
+  			{
+  				$(".bank_city").html(response);
+  			}
+  		});
+  	});
+
+  	$(".bank_city").change(function()
+  	{
+  		var formData = {
+  			"bank" : $(".bank_name").val(),
+  			"state" : $(".bank_state").val(),
+  			"city" : $(this).val()
+  		}
+  		$.ajax
+  		({
+  			type: "POST",
+  			url: "get_branch.php",
+  			data: formData,
+  			cache: false,
+  			success: function(response)
+  			{
+  				$(".bank_branch").html(response);
+  			}
+  		});
+  	});
+
+  });
+  $( "#bankForm" ).click(function( event ) {
+  	var $name = $("input[name=acc_name]").val();
+  	var $account = $("input[name=acc_number]").val();
+  	var $radio_button = $('input[name=bank_info]:checked').val();
+  	var $points = $("input[name=bank_points]").val();
+  	var $balance = $("input[name=bank_balance]").val();
+  	var $ifsc;
+
+  	$("#bank_submit_status").empty();
+
+  	if($balance<120){
+  		$("#bank_submit_status").html("Insufficient WEpoints balance!");
+  	}else{
+  		if($name){
+  			$("#acc_name").parent().removeClass("bottom-error");
+  			$("#acc_name_status").empty();
+  		}else{
+  			$("#acc_name").parent().addClass("bottom-error");
+  			$("#acc_name_status").html("Account Holder's Name is required.");
+  		}
+
+  		if($account){
+  			$("#acc_number").parent().removeClass("bottom-error");
+  			$("#acc_number_status").empty();
+  		}else{
+  			$("#acc_number").parent().addClass("bottom-error");
+  			$("#acc_number_status").html("Account Number is required.");
+  		}
+  		if($points){
+  			if($points > $balance){
+  				$("#bank_points").parent().addClass("bottom-error");
+  				$("#bank_points_status").html("WEpoints must be less than equal to Balance!");
+  			}else if($points%120==0 && $points!=0){
+  				$("#bank_points").parent().removeClass("bottom-error");
+  				$("#bank_points_status").empty();
+  			}else{
+  				$("#bank_points").parent().addClass("bottom-error");
+  				$("#bank_points_status").html("WEpoints must be 120 or multiple of 120!");
+  			}
+  		}else{
+  			$("#bank_points").parent().addClass("bottom-error");
+  			$("#bank_points_status").html("WEpoints is required.");
+  		}
+  		if($radio_button=="ifsc"){
+  			$ifsc = $("input[name=bank_ifsc]").val();
+  			if(!$ifsc){
+  				$("#bank_ifsc").parent().addClass("bottom-error");
+  				$("#bank_ifsc_status").html("IFSCode is required.");
+  			}
+  			var formData = {
+  				"name" : $name,
+  				"account" : $account,
+  				"points" : $points,
+  				"ifsc" : $ifsc,
+  				"balance" : $balance
+  			}
+  			if(!$("#bank_ifsc_status").html() && !$("#bank_points_status").html() && !$("#acc_number_status").html() && !$("#acc_name_status").html()){
+  				$.ajax({
+  					type        : "POST",
+  					url         : "userBank.php",
+  					data        : formData,
+  					success	: function(response){
+  						data = JSON.parse(response);
+  						if (!data.success) {
+  						    	if(data.errors.submit){
+  						    		$("#bank_submit_status").html(data.errors.submit);
+  						    	}
+  						}else{
+  							location.reload();
+  						}
+  					},
+  					error	: function(response){
+  						alert("error");
+  					}
+  				});
+  			}
+  		}else{
+  			$bank = $(".bank_name option:selected").text();
+  			$state = $(".bank_state option:selected").text();
+  			$city = $(".bank_city option:selected").text();
+  			$branch = $(".bank_branch option:selected").text();
+  			if($bank.substring(0,6)=="Select"){
+  				$("#bank_name_status").html("Select Bank Name!");
+  			}else{
+  				$("#bank_name_status").empty();
+  				if($state.substring(0,6)=="Select"){
+  					$("#bank_state_status").html("Select State!");
+  				}else{
+  					$("#bank_state_status").empty();
+  					if($city.substring(0,6)=="Select"){
+  						$("#bank_city_status").html("Select City!");
+  					}else{
+  						$("#bank_city_status").empty();
+  						if($branch.substring(0,6)=="Select"){
+  							$("#bank_branch_status").html("Select Branch!");
+  						}else{
+  							$("#bank_branch_status").empty();
+  							$ifsc = $(".bank_branch option:selected").val();
+  							var formData = {
+  								"name" : $name,
+  								"account" : $account,
+  								"points" : $points,
+  								"ifsc" : $ifsc,
+  								"balance" : $balance
+  							}
+  							if(!$("#bank_ifsc_status").html() && !$("#bank_points_status").html() && !$("#acc_number_status").html() && !$("#acc_name_status").html()){
+  								$.ajax({
+  									type        : "POST",
+  									url         : "userBank.php",
+  									data        : formData,
+  									success	: function(response){
+  										data = JSON.parse(response);
+  										if (!data.success) {
+  										    	if(data.errors.submit){
+  										    		$("#bank_submit_status").html(data.errors.submit);
+  										    	}
+  										}else{
+  											location.reload();
+  										}
+  									},
+  									error	: function(response){
+  										alert("error");
+  									}
+  								});
+  							}
+  						}
+  					}
+  				}
+  			}
+  		}
+  	}
+  	return false;
+  });
+  $( "#paytmForm" ).click(function( event ) {
+  	var formData = {
+  		"mobile" : $("input[name=paytm_mobile]").val(),
+  		"points" : $("input[name=paytm_points]").val(),
+  		"balance" : $("input[name=paytm_balance]").val()
+  	};
+  	$("#paytm_submit_status").empty();
+  	if(formData["balance"]<120){
+  		$("#paytm_submit_status").html("Insufficient WEpoints balance!");
+  	}else{
+  		if(formData["mobile"]){
+  			if(/^[7-9][0-9]{9}$/.test(formData["mobile"])){
+  				$("#paytm_mobile").parent().removeClass("bottom-error");
+  				$("#paytm_mobile_status").empty();
+  			}else{
+  				$("#paytm_mobile").parent().addClass("bottom-error");
+  				$("#paytm_mobile_status").html("Invalid Mobile Number!");
+  			}
+  		}else{
+  			$("#paytm_mobile").parent().addClass("bottom-error");
+  			$("#paytm_mobile_status").html("Mobile Number is required.");
+  		}
+  		if(formData["points"]){
+  			if(formData["points"]>formData["balance"]){
+  				$("#paytm_points").parent().addClass("bottom-error");
+  				$("#paytm_points_status").html("WEpoints must be less than equal to Balance!");
+  			}else if(formData["points"]%120==0 && formData["points"]!=0){
+  				$("#paytm_points").parent().removeClass("bottom-error");
+  				$("#paytm_points_status").empty();
+  			}else{
+  				$("#paytm_points").parent().addClass("bottom-error");
+  				$("#paytm_points_status").html("WEpoints must be 120 or multiple of 120!");
+  			}
+  		}else{
+  			$("#paytm_points").parent().addClass("bottom-error");
+  			$("#paytm_points_status").html("WEpoints is required.");
+  		}
+  		if(!$("#paytm_mobile_status").html() && !$("#paytm_points_status").html()){
+  			$.ajax({
+  				type        : "POST",
+  				url         : "userPaytm.php",
+  				data        : formData,
+  				success	: function(response){
+  					data = JSON.parse(response);
+  					if (!data.success) {
+  					    	if(data.errors.submit){
+  					    		$("#paytm_submit_status").html(data.errors.submit);
+  					    	}
+  					}else{
+  						location.reload();
+  					}
+  				},
+  				error	: function(response){
+  					alert("error");
+  				}
+  			});
+  		}
+  	}
+  	return false;
+  });
+
 //function for address
 function deleteAddress(aid){
 	if(confirm("Are you sure you want to delete this Address?")){
@@ -23,7 +311,7 @@ function currentDate() {
 
     return [year, month, day].join("-");
 }
-  
+
 //function for clickable panel-heading
 $(document).on('click', '.panel-heading span.clickable', function (e) {
     var $this = $(this);
@@ -42,50 +330,6 @@ $(document).on('click', '.panel div.clickable', function (e) {
     }
 });
 
-//function for number input
-$(document).ready(function() {
-    $("#input_username").keydown(function(e){
-    	//Allow: backspace, delete, tab, escape and enter 
-        //if you want decimal use 190
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
-             // Allow: Ctrl+A
-            (e.keyCode == 65 && e.ctrlKey === true) ||
-             // Allow: Ctrl+C
-            (e.keyCode == 67 && e.ctrlKey === true) ||
-             // Allow: Ctrl+X
-            (e.keyCode == 88 && e.ctrlKey === true) ||
-             // Allow: home, end, left, right
-            (e.keyCode >= 35 && e.keyCode <= 39) ||
-             // Allow: alphabets
-            (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 97 && e.keyCode <= 122)) {
-                 // let it happen, dont do anything
-                 return;
-        }else{
-            e.preventDefault();
-        }
-    });
-    $("#input_pincode,#pincode0,#pincode1,#pincode2,#pincode3,#input_price,#input_weight,#input_mobile,#input_login_mobile").keydown(function (e) {
-        // Allow: backspace, delete, tab, escape and enter 
-        //if you want decimal use 190
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
-             // Allow: Ctrl+A
-            (e.keyCode == 65 && e.ctrlKey === true) ||
-             // Allow: Ctrl+C
-            (e.keyCode == 67 && e.ctrlKey === true) ||
-             // Allow: Ctrl+X
-            (e.keyCode == 88 && e.ctrlKey === true) ||
-             // Allow: home, end, left, right
-            (e.keyCode >= 35 && e.keyCode <= 39)) {
-                 // let it happen, dont do anything
-                 return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
-        }
-    });
-});
-
 //function for login form new
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     var target = this.href.split('#');
@@ -99,7 +343,7 @@ $( "#changePasswordForm" ).submit(function( event ) {
 		"input_new_password" : $("input[name=input_new_password]").val(),
 		"input_re_new_password" : $("input[name=input_re_new_password]").val()
 	};
-	
+
 	$("#change_password_submit_status").empty();
 	if(!formData["input_old_password"]){
 		$("#input_old_password").addClass("has-error");
@@ -112,7 +356,7 @@ $( "#changePasswordForm" ).submit(function( event ) {
 			$("#input_old_password").removeClass("has-error");
 			$("#change_password_old_status").empty();
 		}
-	
+
 	}
 	if(!formData["input_new_password"]){
 		$("#input_new_password").addClass("has-error");
@@ -138,9 +382,9 @@ $( "#changePasswordForm" ).submit(function( event ) {
 	}
 	if(!$("#change_password_old_status").html() && !$("#change_password_new_status").html() && !$("#change_password_re_new_status").html()){
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "userSettings.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 				data = JSON.parse(response);
 				if (!data.success) {
@@ -153,7 +397,7 @@ $( "#changePasswordForm" ).submit(function( event ) {
 			},
 			error	: function(response){
 				alert("error");
-			}  
+			}
 		});
 	}
 	return false;
@@ -170,9 +414,9 @@ $( "#referralForm" ).click(function( event ) {
 		$("#submit_status").html("Please enter Email address or/and Mobile number.");
 	}else{
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "userReferral.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 				data = JSON.parse(response);
 				if (!data.success) {
@@ -185,14 +429,14 @@ $( "#referralForm" ).click(function( event ) {
 			},
 			error	: function(response){
 				alert("error");
-			}  
+			}
 		});
 	}
 	return false;
 });
 
 //function for contact form
-$(document).ready(function(){ 
+$(document).ready(function(){
   //Hiding Labels Initially
   $('#contact form .row .floating-label-form-group').each(function(){
     $(this).addClass('js-hide-label');
@@ -208,24 +452,30 @@ $(document).ready(function(){
   $('#contact form .row .floating-label-form-group').find('input,textarea').on('keyup blur focus',function(e) {
       var $this = $(this),
           $parent = $this.parent();
-      
+
       if(e.type=='keyup') {
             $parent.removeClass('js-hide-label').addClass('js-highlight-label');
       }
     else if(e.type=='blur'){
+      var id = $this.attr('id');
       if($this.val()==''){
         $parent.addClass('js-hide-label');
+        $parent.addClass('bottom-error');
+        var str = $this.attr('placeholder');
+        $("#"+id+"_status").html(str+" is required.");
       }
       else{
         $parent.removeClass('js-hide-label').addClass('js-highlight-label');
+        $parent.removeClass('bottom-error');
+        $("#"+id+"_status").empty();
       }
     }
-    
+
       else if(e.type=='focus'){
-        $parent.removeClass('js-hide-label').addClass('js-highlight-label'); 
+        $parent.removeClass('js-hide-label').addClass('js-highlight-label');
       }
-    
-  });  
+
+  });
 });
 
 $( "#contactForm" ).submit(function( event ) {
@@ -243,7 +493,7 @@ $( "#contactForm" ).submit(function( event ) {
 		$("#name").removeClass("bottom-error");
 		$("#name_status").empty();
 	}
-	
+
 	if(!formData["email"]){
 		$("#email").parent().addClass("bottom-error");
 		$("#email_status").html("Email address is required.");
@@ -251,7 +501,7 @@ $( "#contactForm" ).submit(function( event ) {
 		$("#email").removeClass("bottom-error");
 		$("#email_status").empty();
 	}
-	
+
 	if(!formData["phone"]){
 		$("#phone").parent().addClass("bottom-error");
 		$("#phone_status").html("Mobile number is required.");
@@ -259,7 +509,7 @@ $( "#contactForm" ).submit(function( event ) {
 		$("#phone").removeClass("bottom-error");
 		$("#phone_status").empty();
 	}
-	
+
 	if(!formData["message"]){
 		$("#message").parent().addClass("bottom-error");
 		$("#message_status").html("Message is required.");
@@ -267,12 +517,12 @@ $( "#contactForm" ).submit(function( event ) {
 		$("#message").removeClass("bottom-error");
 		$("#message_status").empty();
 	}
-	
+
 	if(!$("#name_status").html() && !$("#email_status").html() && !$("#phone_status").html() && !$("#message_status").html()){
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "userMessage.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 				data = JSON.parse(response);
 				if (!data.success) {
@@ -285,8 +535,8 @@ $( "#contactForm" ).submit(function( event ) {
 				}
 			},
 			error	: function(response){
-				alert("error");	
-			}  
+				alert("error");
+			}
 		});
 	}
 	return false;
@@ -315,9 +565,9 @@ $( ".updateReviews" ).submit(function( event ) {
 		"rid" : $(some2).val(),
 	};
 	$.ajax({
-		type        : "POST", 
+		type        : "POST",
 		url         : "updateReviews.php",
-		data        : formData,		    
+		data        : formData,
 		success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
@@ -330,8 +580,8 @@ $( ".updateReviews" ).submit(function( event ) {
 			}
 		},
 		error	: function(response){
-			alert("error");	
-		}  
+			alert("error");
+		}
 	});
 	return false;
 });
@@ -349,9 +599,9 @@ $( ".userReviews" ).submit(function( event ) {
 		"rid" : id,
 	};
 	$.ajax({
-		type        : "POST", 
+		type        : "POST",
 		url         : "userReviews.php",
-		data        : formData,		    
+		data        : formData,
 		success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
@@ -364,8 +614,8 @@ $( ".userReviews" ).submit(function( event ) {
 			}
 		},
 		error	: function(response){
-			alert("error");	
-		}  
+			alert("error");
+		}
 	});
 	return false;
 });
@@ -388,9 +638,9 @@ $( ".userChats" ).submit(function( event ) {
 		$(inm).removeClass("has-error");
 		$(ss).empty();
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "userChats.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 				data = JSON.parse(response);
 				if (!data.success) {
@@ -401,14 +651,14 @@ $( ".userChats" ).submit(function( event ) {
 				else{
 					$(inm).val("");
 var message = "<div style='width: 80%; display: inline-block'><label>me</label>: <label style='font-weight: normal;'>"+formData["input_message"]+"</label></div><div style='width: 18%; display: inline-block; vertical-align: top;'><label style='font-weight: normal; float: right; font-size: 10px;'>now</label></div>";
-					
+
 					$(yd).append(message);
-					$(yd).scrollTop($(yd).prop("scrollHeight"));				
+					$(yd).scrollTop($(yd).prop("scrollHeight"));
 				}
 			},
 			error	: function(response){
-				alert("error");	
-			}  
+				alert("error");
+			}
 		});
 	}
 	return false;
@@ -429,9 +679,9 @@ $( "#forgetform" ).submit(function( event ) {
 	}
 	if(!$("#forget_email_status").html()){
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "userForget.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
@@ -440,12 +690,12 @@ $( "#forgetform" ).submit(function( event ) {
 			else{
 				$("#forget_otp").show();
 				$("#forget_email").hide();
-				$("#otpEmail").val(formData["input_email"]);				
+				$("#otpEmail").val(formData["input_email"]);
 			}
 			},
 			error	: function(response){
-			alert("error");	
-			}  
+			alert("error");
+			}
 		});
 	}
 	return false;
@@ -458,9 +708,9 @@ function sendOTP()
 		"input_email" : email,
 	};
 	$.ajax({
-		type        : "POST", 
+		type        : "POST",
 		url         : "sendOTP.php",
-		data        : formData,		    
+		data        : formData,
 		success	: function(response){
 		data = JSON.parse(response);
 			if (!data.success) {
@@ -468,8 +718,8 @@ function sendOTP()
 			}
 		},
 		error	: function(response){
-		alert("error");	
-		}  
+		alert("error");
+		}
 	});
 	return false;
 }
@@ -488,9 +738,9 @@ $( "#otpform" ).submit(function( event ) {
 	}
 	if(!$("#otp_submit_status").html()){
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "verifyOTP.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
@@ -501,14 +751,14 @@ $( "#otpform" ).submit(function( event ) {
 			}
 			},
 			error	: function(response){
-			alert("error");	
-			}  
+			alert("error");
+			}
 		});
 	}
 	return false;
 });
 
-	
+
 //function for login form
 $( "#loginform" ).submit(function( event ) {
 	var formData = {
@@ -520,7 +770,7 @@ $( "#loginform" ).submit(function( event ) {
 		$("#input_login_mobile").addClass("has-error");
 		$("#login_mobile_status").html("Mobile no. is required.");
 	}else{
-		if(formData["input_mobile"].length==10 && (formData["input_mobile"].charAt(0)=="9" || formData["input_mobile"].charAt(0)=="8" || formData["input_mobile"].charAt(0)=="7")){
+		if(/^[7-9][0-9]{9}$/.test(formData["input_mobile"])){
 			$("#input_login_mobile").removeClass("has-error");
 			$("#login_mobile_status").empty();
 		}else{
@@ -528,7 +778,7 @@ $( "#loginform" ).submit(function( event ) {
 			$("#login_mobile_status").html("Invalid Mobile Number!");
 		}
 	}
-	
+
 	if(!formData["input_password"]){
 		$("#input_login_password").addClass("has-error");
 		$("#login_password_status").html("Password is required.");
@@ -536,13 +786,13 @@ $( "#loginform" ).submit(function( event ) {
 		$("#input_login_password").removeClass("has-error");
 		$("#login_password_status").empty();
 	}
-	
+
 	if(!$("#login_mobile_status").html() && !$("#login_password_status").html()){
-		
+
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "userLogin.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
@@ -555,10 +805,10 @@ $( "#loginform" ).submit(function( event ) {
 			}
 			},
 			error	: function(response){
-			alert("error");	
-			}  
+			alert("error");
+			}
 		});
-		
+
 	}
 	return false;
 });
@@ -576,12 +826,12 @@ $( "#registerform" ).submit(function( event ) {
 	$("#submit_status").empty();
 	$("#code_status").empty();
 	$("#input_code").removeClass("has-error");
-	
+
 	if(!formData["input_mobile"]){
 		$("#input_mobile").addClass("has-error");
 		$("#mobile_status").html("Mobile no. is required.");
 	}else{
-		if(formData["input_mobile"].length==10 && (formData["input_mobile"].charAt(0)=="9" || formData["input_mobile"].charAt(0)=="8" || formData["input_mobile"].charAt(0)=="7")){
+		if(/^[7-9][0-9]{9}$/.test(formData["input_mobile"])){
 			$("#input_mobile").removeClass("has-error");
 			$("#mobile_status").empty();
 		}else{
@@ -589,7 +839,7 @@ $( "#registerform" ).submit(function( event ) {
 			$("#mobile_status").html("Invalid Mobile Number!");
 		}
 	}
-	
+
 	if(!formData["input_email"]){
 		$("#input_email").addClass("has-error");
 		$("#email_status").html("Email address is required.");
@@ -597,7 +847,7 @@ $( "#registerform" ).submit(function( event ) {
 		$("#input_email").removeClass("has-error");
 		$("#email_status").empty();
 	}
-	
+
 	if(!formData["input_username"]){
 		$("#input_username").addClass("has-error");
 		$("#username_status").html("Name is required.");
@@ -610,7 +860,7 @@ $( "#registerform" ).submit(function( event ) {
 			$("#username_status").html("At least three characters.");
 		}
 	}
-	
+
 	if(!formData["input_password"]){
 		$("#input_password").addClass("has-error");
 		$("#password_status").html("Password is required.");
@@ -623,7 +873,7 @@ $( "#registerform" ).submit(function( event ) {
 			$("#password_status").html("At least six characters.");
 		}
 	}
-	
+
 	if(!formData["input_repassword"]){
 		$("#input_repassword").addClass("has-error");
 		$("#repassword_status").html("Re-type Password is required.");
@@ -631,16 +881,16 @@ $( "#registerform" ).submit(function( event ) {
 		$("#input_repassword").removeClass("has-error");
 		$("#repassword_status").empty();
 	}
-	
+
 	if(formData["input_password"] != formData["input_repassword"] && formData["input_password"] && formData["input_repassword"]){
 		$("#repassword_status").html("Re-type Password must be same as Password.");
 	}
-	
+
 	if(formData["input_code"]){
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "checkReferralCode.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 			data = JSON.parse(response);
 				if (!data.success) {
@@ -649,19 +899,19 @@ $( "#registerform" ).submit(function( event ) {
 				}
 			},
 			error	: function(response){
-				alert("error");	
-			}  
+				alert("error");
+			}
 		});
 	}
-	
+
 	if(!$("#mobile_status").html() && !$("#email_status").html() && !$("#username_status").html() && !$("#password_status").html() && !$("#repassword_status").html() && !$("#code_status").html()){
 		if(!$("#input_register_checkbox").is(":checked")){
 			alert("Please ensure that you are 18+");
 		}else{
 			$.ajax({
-				type        : "POST", 
+				type        : "POST",
 				url         : "userRegister.php",
-				data        : formData,		    
+				data        : formData,
 				success	: function(response){
 				data = JSON.parse(response);
 				if (!data.success) {
@@ -682,13 +932,13 @@ $( "#registerform" ).submit(function( event ) {
 				}
 				},
 				error	: function(response){
-				alert("error");	
-				}  
+				alert("error");
+				}
 			});
 		}
 	}
 	return false;
-            
+
 });
 
 /*
@@ -704,7 +954,7 @@ $( "#verifyotpform" ).submit(function( event ) {
 	};
 	$("#otp_status").empty();
 	//$("#input_code").removeClass("has-error");
-	
+
 	if(!formData["input_verify_mobile"]){
 		$("#input_verify_mobile").addClass("has-error");
 		$("#verify_mobile_status").html("Mobile no. is required.");
@@ -722,12 +972,12 @@ $( "#verifyotpform" ).submit(function( event ) {
 		$("#input_otp").addClass("has-error");
 		$("#otp_status").html("Please provide a valid OTP");
 	}
-	
+
 	if(!$("#verify_mobile_status").html() && !$("#otp_status").html()){
 		$.ajax({
-			type        : "POST", 
+			type        : "POST",
 			url         : "verifyMobileOTP.php",
-			data        : formData,		    
+			data        : formData,
 			success	: function(response){
 			data = JSON.parse(response);
 			if (!data.success) {
@@ -740,8 +990,8 @@ $( "#verifyotpform" ).submit(function( event ) {
 			}
 			},
 			error	: function(response){
-				alert("error");	
-			}  
+				alert("error");
+			}
 		});
 	}
 	return false;
@@ -760,13 +1010,13 @@ function userParcels()
 		"input_weight" : $("input[name=input_weight]").val(),
 		"input_price" : $("input[name=input_price]").val(),
 	};
-	
+
 	if(!formData["input_delivery_address_id"]){
 		$("#delivery_address_status").html("Delivery address is required.");
 	}else{
 		$("#delivery_address_status").empty();
 	}
-	
+
 	if(!formData["input_pickup_address_id"]){
 		$("#pickup_address_status").html("Pickup address is required.");
 	}else{
@@ -777,7 +1027,7 @@ function userParcels()
 		$("#datepicker").addClass("has-error");
 		$("#date_status").html("Parcel date is required.");
 	}else{
-		
+
 		if(formData["input_delivery_date"] < currentDate()){
 			$("#datepicker").addClass("has-error");
 			$("#date_status").html("Parcel date must be greater than present date.");
@@ -794,7 +1044,7 @@ function userParcels()
 		$("#input_headline").removeClass("has-error");
 		$("#headline_status").empty();
 	}
-	
+
 	if(!formData["input_weight"]){
 		$("#input_weight").addClass("has-error");
 		$("#weight_status").html("Weight is required.");
@@ -802,7 +1052,7 @@ function userParcels()
 		$("#input_weight").removeClass("has-error");
 		$("#weight_status").empty();
 	}
-	
+
 	if(!formData["input_price"]){
 		$("#input_price").addClass("has-error");
 		$("#price_status").html("Price is required.");
@@ -810,16 +1060,16 @@ function userParcels()
 		$("#input_price").removeClass("has-error");
 		$("#price_status").empty();
 	}
-	
+
 	if(formData["input_delivery_address_id"] == formData["input_pickup_address_id"] && formData["input_pickup_address_id"]){
 		$("#delivery_address_status").html("Pickup address and Delivery address must be different.");
 	}
-	
+
 	if(!$("#delivery_address_status").html() && !$("#pickup_address_status").html() && !$("#date_status").html() && !$("#headline_status").html() && !$("#weight_status").html() && !$("#price_status").html()){
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "userParcels.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	data = JSON.parse(response);
 	            	if (!data.success) {
@@ -832,8 +1082,8 @@ function userParcels()
 		    	}
 	            },
 	            error	: function(response){
-	            	alert("error");	
-	            }   
+	            	alert("error");
+	            }
 	        });
 	}
 	return false;
@@ -851,13 +1101,13 @@ function updateParcels()
 		"input_weight" : $("input[name=input_weight]").val(),
 		"input_price" : $("input[name=input_price]").val(),
 	};
-	
+
 	if(!formData["input_delivery_address_id"]){
 		$("#delivery_address_status").html("Delivery address is required.");
 	}else{
 		$("#delivery_address_status").empty();
 	}
-	
+
 	if(!formData["input_pickup_address_id"]){
 		$("#pickup_address_status").html("Pickup address is required.");
 	}else{
@@ -868,7 +1118,7 @@ function updateParcels()
 		$("#datepicker").addClass("has-error");
 		$("#date_status").html("Parcel date is required.");
 	}else{
-		
+
 		if(formData["input_delivery_date"] < currentDate()){
 			$("#datepicker").addClass("has-error");
 			$("#date_status").html("Parcel date must be greater than present date.");
@@ -885,7 +1135,7 @@ function updateParcels()
 		$("#input_headline").removeClass("has-error");
 		$("#headline_status").empty();
 	}
-	
+
 	if(!formData["input_weight"]){
 		$("#input_weight").addClass("has-error");
 		$("#weight_status").html("Weight is required.");
@@ -893,7 +1143,7 @@ function updateParcels()
 		$("#input_weight").removeClass("has-error");
 		$("#weight_status").empty();
 	}
-	
+
 	if(!formData["input_price"]){
 		$("#input_price").addClass("has-error");
 		$("#price_status").html("Price is required.");
@@ -901,17 +1151,17 @@ function updateParcels()
 		$("#input_price").removeClass("has-error");
 		$("#price_status").empty();
 	}
-	
+
 	if(formData["input_delivery_address_id"] == formData["input_pickup_address_id"] && formData["input_pickup_address_id"])
 	{
 		$("#delivery_address_status").html("Pickup address and Delivery address must be different.");
 	}
-	
+
 	if(!$("#delivery_address_status").html() && !$("#pickup_address_status").html() && !$("#date_status").html() && !$("#headline_status").html() && !$("#weight_status").html() && !$("#price_status").html()){
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "updateParcels.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	data = JSON.parse(response);
 	            	if (!data.success) {
@@ -927,8 +1177,8 @@ function updateParcels()
 		    	}
 	            },
 	            error	: function(response){
-	            	alert("error");	
-	            }   
+	            	alert("error");
+	            }
 	        });
 	}
 	return false;
@@ -945,13 +1195,13 @@ function userJourneys()
 		"input_notes" : $("textarea[name=input_notes]").val(),
 		"input_headline" : $("input[name=input_headline]").val(),
 	};
-	
+
 	if(!formData["input_destination_address_id"]){
 		$("#destination_address_status").html("Destination address is required.");
 	}else{
 		$("#destination_address_status").empty();
 	}
-	
+
 	if(!formData["input_source_address_id"]){
 		$("#source_address_status").html("Source address is required.");
 	}else{
@@ -962,7 +1212,7 @@ function userJourneys()
 		$("#datepicker").addClass("has-error");
 		$("#date_status").html("Journey date is required.");
 	}else{
-		
+
 		if(formData["input_journey_date"] < currentDate()){
 			$("#datepicker").addClass("has-error");
 			$("#date_status").html("Journey date must be greater than present date.");
@@ -979,16 +1229,16 @@ function userJourneys()
 		$("#input_headline").removeClass("has-error");
 		$("#headline_status").empty();
 	}
-	
+
 	if(formData["input_destination_address_id"] == formData["input_source_address_id"] && formData["input_source_address_id"]){
 		$("#destination_address_status").html("Source address and Destination address must be different.");
 	}
-	
+
 	if(!$("#destination_address_status").html() && !$("#source_address_status").html() && !$("#date_status").html() && !$("#headline_status").html()){
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "userJourneys.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	data = JSON.parse(response);
 	            	if (!data.success) {
@@ -1001,8 +1251,8 @@ function userJourneys()
 		    	}
 	            },
 	            error	: function(response){
-	            	alert("error");	
-	            }   
+	            	alert("error");
+	            }
 	        });
 	}
 	return false;
@@ -1018,13 +1268,13 @@ function updateJourneys()
 		"input_notes" : $("textarea[name=input_notes]").val(),
 		"input_headline" : $("input[name=input_headline]").val(),
 	};
-	
+
 	if(!formData["input_destination_address_id"]){
 		$("#destination_address_status").html("Destination address is required.");
 	}else{
 		$("#destination_address_status").empty();
 	}
-	
+
 	if(!formData["input_source_address_id"]){
 		$("#source_address_status").html("Source address is required.");
 	}else{
@@ -1035,7 +1285,7 @@ function updateJourneys()
 		$("#datepicker").addClass("has-error");
 		$("#date_status").html("Journey date is required.");
 	}else{
-		
+
 		if(formData["input_journey_date"] < currentDate()){
 			$("#datepicker").addClass("has-error");
 			$("#date_status").html("Journey date must be greater than present date.");
@@ -1052,17 +1302,17 @@ function updateJourneys()
 		$("#input_headline").removeClass("has-error");
 		$("#headline_status").empty();
 	}
-	
+
 	if(formData["input_destination_address_id"] == formData["input_source_address_id"] && formData["input_source_address_id"])
 	{
 		$("#destination_address_status").html("Source address and Destination address must be different.");
 	}
-	
+
 	if(!$("#destination_address_status").html() && !$("#source_address_status").html() && !$("#date_status").html() && !$("#headline_status").html()){
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "updateJourneys.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	data = JSON.parse(response);
 	            	if (!data.success) {
@@ -1078,8 +1328,8 @@ function updateJourneys()
 		    	}
 	            },
 	            error	: function(response){
-	            	alert("error");	
-	            }   
+	            	alert("error");
+	            }
 	        });
 	}
 	return false;
@@ -1098,14 +1348,14 @@ function checklabel(){
 		$("#label_status").html("Label is required.");
 	}else{
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "checklabel.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	data = JSON.parse(response);
 	            	if (!data.success) {
 		            	if(data.errors.input_address_label){
-		     
+
 		            		$("#input_address_label").addClass("has-error");
 		            		$("#label_status").html(data.errors.input_address_label);
 		            	}
@@ -1126,14 +1376,14 @@ function checkpincode(){
 		$("#pincode_status").html("Pincode is required.");
 	}else{
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "checkpincode.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	data = JSON.parse(response);
 	            	if (!data.success) {
 		            	if(data.errors.input_pincode){
-		     
+
 		            		$("#input_pincode").addClass("has-error");
 		            		$("#pincode_status").html(data.errors.input_pincode);
 		            	}
@@ -1141,7 +1391,7 @@ function checkpincode(){
 		    }
 	        });
 	}
-	
+
         return false;
 }
 function checkaddress(){
@@ -1156,7 +1406,7 @@ function checkaddress(){
 	}
 	return false;
 }
-			
+
 function updateAddress(){
 	var formData = {
 		"address_id" : $("input[name=address_id]").val(),
@@ -1167,20 +1417,20 @@ function updateAddress(){
 		"state" : $("input[name=state]").val(),
 	};
 	if(!formData["input_address_label"] || !formData["input_pincode"] || !formData["input_address"]){
-		
+
 		if(!formData["input_address_label"]){
 			$("#input_address_label").addClass("has-error");
 			$("#label_status").html("Label is required.");
 		}else{
 			$.ajax({
-		            type        : "POST", 
+		            type        : "POST",
 		            url         : "checklabel.php",
-		            data        : formData,		    
+		            data        : formData,
 		            success	: function(response){
 		            	data = JSON.parse(response);
 		            	if (!data.success) {
 			            	if(data.errors.input_address_label){
-			     
+
 			            		$("#input_address_label").addClass("has-error");
 			            		$("#label_status").html(data.errors.input_address_label);
 			            	}
@@ -1188,20 +1438,20 @@ function updateAddress(){
 			    }
 		        });
 		}
-	
+
 		if(!formData["input_pincode"]){
 			$("#input_pincode").addClass("has-error");
 			$("#pincode_status").html("Pincode is required.");
 		}else{
 			$.ajax({
-		            type        : "POST", 
+		            type        : "POST",
 		            url         : "checkpincode.php",
-		            data        : formData,		    
+		            data        : formData,
 		            success	: function(response){
 		            	data = JSON.parse(response);
 		            	if (!data.success) {
 			            	if(data.errors.input_pincode){
-			     
+
 			            		$("#input_pincode").addClass("has-error");
 			            		$("#pincode_status").html(data.errors.input_pincode);
 			            	}
@@ -1209,7 +1459,7 @@ function updateAddress(){
 			    }
 		        });
 		}
-	
+
 		if(!formData["input_address"]){
 			$("#comment").addClass("has-error");
 			$("#address_status").html("Address is required.");
@@ -1217,12 +1467,12 @@ function updateAddress(){
 			$("#comment").removeClass("has-error");
 			$("#address_status").empty();
 		}
-	
+
 	}else{
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "updateAddress.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	$(".form-control").removeClass("has-error");
 	            	$(".error-status").empty();
@@ -1249,8 +1499,8 @@ function updateAddress(){
 		    	}
 	            },
 	            error	: function(response){
-	            	alert("error");	
-	            }   
+	            	alert("error");
+	            }
 	        });
 	}
 	return false;
@@ -1265,20 +1515,20 @@ function userAddress(){
 		"state" : $("input[name=state]").val(),
 	};
 	if(!formData["input_address_label"] || !formData["input_pincode"] || !formData["input_address"]){
-	
+
 		if(!formData["input_address_label"]){
 			$("#input_address_label").addClass("has-error");
 			$("#label_status").html("Label is required.");
 		}else{
 			$.ajax({
-		            type        : "POST", 
+		            type        : "POST",
 		            url         : "checklabel.php",
-		            data        : formData,		    
+		            data        : formData,
 		            success	: function(response){
 		            	data = JSON.parse(response);
 		            	if (!data.success) {
 			            	if(data.errors.input_address_label){
-			     
+
 			            		$("#input_address_label").addClass("has-error");
 			            		$("#label_status").html(data.errors.input_address_label);
 			            	}
@@ -1286,20 +1536,20 @@ function userAddress(){
 			    }
 		        });
 		}
-	
+
 		if(!formData["input_pincode"]){
 			$("#input_pincode").addClass("has-error");
 			$("#pincode_status").html("Pincode is required.");
 		}else{
 			$.ajax({
-		            type        : "POST", 
+		            type        : "POST",
 		            url         : "checkpincode.php",
-		            data        : formData,		    
+		            data        : formData,
 		            success	: function(response){
 		            	data = JSON.parse(response);
 		            	if (!data.success) {
 			            	if(data.errors.input_pincode){
-			     
+
 			            		$("#input_pincode").addClass("has-error");
 			            		$("#pincode_status").html(data.errors.input_pincode);
 			            	}
@@ -1307,7 +1557,7 @@ function userAddress(){
 			    }
 		        });
 		}
-	
+
 		if(!formData["input_address"]){
 			$("#comment").addClass("has-error");
 			$("#address_status").html("Address is required.");
@@ -1315,12 +1565,12 @@ function userAddress(){
 			$("#comment").removeClass("has-error");
 			$("#address_status").empty();
 		}
-	
+
 	}else{
 		$.ajax({
-	            type        : "POST", 
+	            type        : "POST",
 	            url         : "userAddress.php",
-	            data        : formData,		    
+	            data        : formData,
 	            success	: function(response){
 	            	$(".form-control").removeClass("has-error");
 	            	$(".error-status").empty();
@@ -1347,8 +1597,8 @@ function userAddress(){
 		    	}
 	            },
 	            error	: function(response){
-	            	alert("error");	
-	            }   
+	            	alert("error");
+	            }
 	        });
 	}
 	return false;
@@ -1357,7 +1607,7 @@ function userAddress(){
 //function for pincode based address autofill in myAddress.php
 
 function fillAddress()
-{       
+{
 	$( "#input_pincode" ).autocomplete({
       source: function( request, response ) {
         $.ajax({
@@ -1373,7 +1623,7 @@ function fillAddress()
       },
       minLength: 3,  // Set minimum input length
       select: function( event, ui ) {
-            var vl = ui.item.id;      
+            var vl = ui.item.id;
             var data = vl.split("-");
             //console.log(data);
             $("#city").val(data[1]);
@@ -1387,11 +1637,11 @@ function fillAddress()
       }
     });
   }
-  
+
 //function for pincode search in myDashboard.php
 
 function showPincode()
-{       
+{
 	$("#pincode0,#pincode1,#pincode2,#pincode3").autocomplete({
       source: function( request, response ) {
         $.ajax({
@@ -1407,7 +1657,7 @@ function showPincode()
       },
       minLength: 3,  // Set minimum input length
       select: function( event, ui ) {
-            var vl = ui.item.id;      
+            var vl = ui.item.id;
             var data = vl.split("-");
             //console.log(data);
       },
@@ -1419,5 +1669,5 @@ function showPincode()
       }
     });
   }
-  
+
 //function for pizza menu

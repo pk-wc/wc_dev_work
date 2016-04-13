@@ -34,9 +34,9 @@ echo '    <script>
 				}
 			}
 
-			
+
 		  </script>';
-		  
+
 echo '  </head>';
 echo '  <body>';
 
@@ -65,8 +65,8 @@ if($wc_uid){
 		$eid = mres_ss($_GET['eid']);
 	}
 	$valid_journey = false;
-	
-	echo '  <div class="container">';/*ravi*/
+
+	echo '  <div class="container" style="padding-bottom:10px">';/*ravi*/
 	echo '<h1 class="page-header">My Journeys</h1>';
 	echo '<div class="row" style="">';
 	checkPageMessages();
@@ -108,8 +108,8 @@ if($wc_uid){
 		echo '		<div class="panel-body panel-collapse collapse" id="pContent">';
 		}
 	}
-	                       
-	
+
+
 	if($valid_journey){
 		echo '			<form class="form-signin" onsubmit="return updateJourneys()">';
 	}else{
@@ -133,7 +133,7 @@ if($wc_uid){
 		echo 'Select Address from list';
 	}
 	echo '								</button>';
-	
+
 	if($valid_journey){
 		echo '							<input type="hidden" id="source_address_id" name="input_source_address_id" value="'.$row['source_address_id'].'" />';
 	}else{
@@ -179,7 +179,7 @@ if($wc_uid){
 		echo '								<input type="text" id="datepicker" name="input_journey_date" class="form-control" placeholder="Enter Journey Date"> '
 		;
 	}
-	
+
 	echo '								<span id="date_status" class="error-status"></span></div>';
 	echo '							</div>';
 	echo '							<div style="padding-top: 5px;">';
@@ -251,7 +251,7 @@ if($wc_uid){
 			echo '					<div style="" class="col-md-4 col-xs-12">';
 			echo '						<div style="border-bottom: 1px solid #fac106;"><label>Source Address</label></div>';
 			$res1 = runQuery("select * from address where address_id='".$row['source_address_id']."'");
-			
+
 			$row1 = mysqli_fetch_array($res1);
 			echo '                  			<div style="">'.$row1['address'].'</div>';
 			echo '                  			<div style=""><label style="width: 30%; font-weight: bold;">Pincode</label><label style="font-weight: normal;">'.$row1['pincode'].'</label></div>';
@@ -287,14 +287,14 @@ if($wc_uid){
 			echo '							<label style="font-weight: normal;">'.$row['notes'].'</label>';
 			echo '						</div>';
 			echo '						<div class="row"><div class="col-xs-6"><a href="'.$_SERVER['PHP_SELF'].'?eid='.$row['journey_id'].'"<button type="button" style="width: 100%;" class="btn btn-primary">Edit</button></a></div>';
-			
+
 			echo '						<div class="col-xs-6"><button type="button" style="width: 100%;" class="btn btn-primary" onclick="deleteJourney(\''.$row['journey_id'].'\');">Delete</button></div></div>';
 			echo '						<div style="margin-top:5px">
 										<a href="myDashboard.php?as_a=sender&input_journey_source_pincode_search='.$source_pincode.'&input_journey_destination_pincode_search='.$destination_pincode.'"<button type="button" style="width: 100%;" class="btn btn-primary">Find a weSender</button></a>
 									</div>';
-									
-			
-			
+
+
+
 			echo '				       </div>';
 			echo '			       </div>';
 			echo '		       </div>';
@@ -305,7 +305,7 @@ if($wc_uid){
 	                echo '		</div>';
 	echo '		</div>';
 	echo '	</div>';
-	
+
         echo '</div>';
 	echo '</div>';
 }else{

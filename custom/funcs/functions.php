@@ -271,6 +271,119 @@ function showFooter(){
 
 }
 
+function loadRedeemModal($points){
+	$wc_uid = getSessionUID();
+	if($wc_uid){
+	echo '
+		<div class="container">
+		  <div id="myModalRedeem" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		          <h4 class="modal-title" id="myModalLabel">Redeem WEpoints</h4>
+		        </div>
+		        <div class="modal-body">
+		        	<div class="login-tab">
+		        			<div style="color:#009688;font-size:22px">WEpoints Balance : '.$points.'</div>&nbsp;&nbsp;
+					  	<ul class="nav nav-tabs" role="tablist" style="width:100%;">
+					    	<li role="presentation" style="width:50%" class="active"><a href="#bankac" aria-controls="bankac" role="tab" data-toggle="tab"><i class="fa fa-bank"></i> Bank A/C</a></li>
+					    	<li role="presentation" style="width:50%"><a href="#paytm" aria-controls="paytm" role="tab" data-toggle="tab">Paytm</a></li>
+					  	</ul>
+						<div class="tab-content">';
+	echo '				    		<div role="tabpanel" class="tab-pane active" id="bankac">&nbsp;';
+	echo '							<form>
+									  <input type="hidden" value="'.$points.'" id="bank_balance" name="bank_balance">';
+
+	echo '								  <div class="floating-label-form-group">';
+	echo '								   <input type="text" id="acc_name" name="acc_name" class="form-control" placeholder="Account Holder\'s Name">';
+	echo '								  </div>';
+
+	echo '								  <div><span id="acc_name_status" class="error-status"></span></div>';
+	echo '								  <div class="floating-label-form-group">';
+	echo '								   <input type="text" id="acc_number" name="acc_number" class="form-control" placeholder="Account  Number">';
+	echo '								  </div>';
+	echo '								  <div><span id="acc_number_status" class="error-status"></span></div>';
+	echo '								  <div class="row" style="padding-top:10px">
+									    <div class="col-xs-6"><input type="radio" onclick="javascript:showBank();" name="bank_info" id="ifsc" value="ifsc" checked> IFSC</div>
+									    <div class="col-xs-6"><input type="radio" onclick="javascript:showBank();" name="bank_info" id="location" value="location"> Location</div>
+									  </div>';
+	echo '								  <div class="floating-label-form-group location" style="display:none">';
+	echo '								   <select name="bank_name" class="bank_name">
+									   	<option selected="selected">Select Bank</option>';
+	$res = runQuery("select distinct bank from banks_branch_info");
+	while($row = mysqli_fetch_array($res)){
+	echo '									<option value="'.$row['bank'].'">'.$row['bank'].'</option>';
+	}
+	echo '								   </select>
+									  </div>';
+	echo '							          <div class="location"><span id="bank_name_status" class="error-status"></span></div>';
+	echo '								  <div class="floating-label-form-group location" style="display:none">';
+	echo '								   <select name="bank_state" class="bank_state">
+									   	<option selected="selected">Select State</option>';
+	echo '								   </select>
+									  </div>';
+	echo '								  <div class="location"><span id="bank_state_status" class="error-status"></span></div>';
+	echo '								  <div class="floating-label-form-group location" style="display:none">';
+	echo '								   <select name="bank_city" class="bank_city">
+									   	<option selected="selected">Select City</option>';
+	echo '								   </select>
+									  </div>';
+	echo '								  <div class="location"><span id="bank_city_status" class="error-status"></span></div>';
+	echo '								  <div class="floating-label-form-group location" style="display:none">';
+	echo '								   <select name="bank_branch" class="bank_branch">
+									   	<option selected="selected">Select Branch</option>';
+	echo '								   </select>
+									  </div>';
+
+	echo '								  <div class="location"><span id="bank_branch_status" class="error-status"></span></div>';
+
+	echo '								  <div class="floating-label-form-group ifsc">';
+	echo '								   <input type="text" id="bank_ifsc" name="bank_ifsc" class="form-control" onblur="checkIfsc()" placeholder="IFSCode">';
+	echo '								  </div>';
+	echo '								  <div class="ifsc"><span id="bank_ifsc_status" class="error-status"></span></div>';
+	echo '								  <div class="floating-label-form-group">';
+	echo '								   <input type="tel" id="bank_points" name="bank_points" class="form-control" placeholder="WEpoints">';
+	echo '								  </div>';
+	echo '								  <div><span id="bank_points_status" class="error-status"></span></div>';
+	echo '								  <div><span id="bank_submit_status" class="error-status"></span></div>';
+	echo '								  <div class="text-center" style="margin-top:10px">';
+	echo '								   <button class="btn btn-primary" id="bankForm" type="submit">Redeem</button>';
+	echo '								  </div>';
+	echo '							</form>';
+	echo '				    		</div>';
+	echo '				    		<div role="tabpanel" class="tab-pane" id="paytm">&nbsp;';
+	echo '							<form>
+									  <input type="hidden" value="'.$points.'" id="paytm_balance" name="paytm_balance">';
+	echo '								  <div class="floating-label-form-group">';
+	echo '								   <input type="tel" id="paytm_mobile" name="paytm_mobile" class="form-control" placeholder="Mobile Number">';
+	echo '								  </div>';
+
+	echo '								  <div><span id="paytm_mobile_status" class="error-status"></span></div>';
+	echo '								  <div class="floating-label-form-group">';
+	echo '								   <input type="tel" id="paytm_points" name="paytm_points" class="form-control" placeholder="WEpoints">';
+	echo '								  </div>';
+	echo '								  <div><span id="paytm_points_status" class="error-status"></span></div>';
+	echo '								  <div><span id="paytm_submit_status" class="error-status"></span></div>';
+	echo '								  <div class="text-center" style="margin-top:10px">';
+	echo '								   <button class="btn btn-primary" id="paytmForm" type="submit">Redeem</button>';
+
+
+	echo '								  </div>';
+	echo '							</form>';
+	echo '				    		</div>';
+	echo '				    	</div>';
+	echo '
+		        	</div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	';
+	}
+}
+
 function loadReferralModal($referral_code){
 	$wc_uid = getSessionUID();
 	if($wc_uid){
@@ -472,9 +585,9 @@ function loadLoginModal(){
 		      			<div role="tabpanel" class="login-tab">
 					  	<!-- Nav tabs -->
 					  	<ul class="nav nav-tabs" role="tablist" style="width:100%;">
-					    	<li role="presentation" class="active"><a href="#signin" aria-controls="signin" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-sign-in"></i></span>Sign In</a></li>
-					    	<li role="presentation"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-pencil-square-o"></i></span>Sign Up</a></li>
-					    	<li role="presentation"><a href="#forget" aria-controls="forget" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-lock"></i></span>Forget Password</a></li>
+					    	<li role="presentation" style="width:31%" class="active"><a href="#signin" aria-controls="signin" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-sign-in"></i></span>Sign In</a></li>
+					    	<li role="presentation" style="width:33%"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-pencil-square-o"></i></span>Sign Up</a></li>
+					    	<li role="presentation" style="width:36%"><a href="#forget" aria-controls="forget" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-lock"></i></span>Forget Password</a></li>
 					  	</ul>
 
 					 	<div class="tab-content">
@@ -717,8 +830,6 @@ function loadAddressModal($link_id, $input_id){
 	';
 }
 
-
-
 function loadJourneyModal($link_id){
 	$wc_uid = getSessionUID();
 	echo '
@@ -755,40 +866,17 @@ function loadJourneyModal($link_id){
 							</div>
 
 							<div class="panel-body">
-								<div style="border-bottom: 1px solid #fac106;">
-									<label>Journey Date</label>
-							   	</div>
-							   	<div style="">
-									<label style="font-weight: normal;">'.$row['journey_date'].'</label>
+								<div>
+									<label>Journey Date:</label> '.$row['journey_date'].'
 								</div>
-								<div style="border-bottom: 1px solid #fac106;">
-									<label>Source Address</label>
+								<div>
+									<label>Source Address:</label> '.$row1['address']." ".$row3['city']." ".$row3['state']." ".$row1['pincode'].'
 								</div>
-								<div style="">';
-
-							echo '
-									<label style="font-weight: normal;">'.$row1['address'].'</label>,
-									<label style="font-weight: normal;">'.$row3['city'].'</label>,
-									<label style="font-weight: normal;">'.$row3['state'].'</label>,
-									<label style="font-weight: normal;">India</label>
-									<label style="font-weight: normal;">'.$row1['pincode'].'</label>
+								<div>
+									<label>Destination Address:</label> '.$row2['address']." ".$row4['city']." ".$row4['state']." ".$row2['pincode'].'
 								</div>
-								<div style="border-bottom: 1px solid #fac106;">
-									<label>Destination Address</label>
-								</div>
-								<div style="">';
-					                echo '
-									<label style="font-weight: normal;">'.$row2['address'].'</label>,
-									<label style="font-weight: normal;">'.$row4['city'].'</label>,
-									<label style="font-weight: normal;">'.$row4['state'].'</label>,
-									<label style="font-weight: normal;">India</label>,
-									<label style="font-weight: normal;">'.$row2['pincode'].'</label>
-								</div>
-								<div style="border-bottom: 1px solid #fac106;">
-									<label>Additional Notes</label>
-							   	</div>
-							   	<div style="">
-									<label style="font-weight: normal;">'.$row['notes'].'</label>
+								<div>
+									<label>Additional Notes:</label> '.$row['notes'].'
 								</div>
 							</div>
 						     </div>
@@ -799,13 +887,7 @@ function loadJourneyModal($link_id){
 					echo '<div style="">No Journeys found</div>';
 				}
 echo '
-				<div style="">
-					<div style=""></div>
-				</div>
-			   </div>
-			   <hr>
-			   <div style="text-align:center">
-			   </div>
+
 			</div>
 		   </div>
 		</div>
@@ -815,8 +897,6 @@ echo '
 }
 
 function loadOrderModal($link_id){
-
-
 	$wc_uid = getSessionUID();
 	echo '
 	<div class="container">
@@ -850,40 +930,17 @@ function loadOrderModal($link_id){
 						  		<h3 class="panel-title">'.$row['headline'].'</h3>
 						  	</div>
 							<div class="panel-body">
-							   <div style="border-bottom: 1px solid #fac106;">
-									<label>Delivery Date</label>
+							   <div>
+									<label>Delivery Date:</label> '.$row['delivery_date'].'
 							   </div>
-							   <div style="">
-								<label style="font-weight: normal;">'.$row['delivery_date'].'</label>
+							   <div>
+									<label>Pickup Address:</label> '.$row1['address']." ".$row3['city']." ".$row3['state']." ".$row1['pincode'].'
 							   </div>
-							   <div style="border-bottom: 1px solid #fac106;">
-									<label>Source Address</label>
+							   <div>
+									<label>Delivery Address:</label> '.$row2['address']." ".$row4['city']." ".$row4['state']." ".$row2['pincode'].'
 							   </div>
-							   <div style="">';
-				echo '
-								<label style="font-weight: normal;">'.$row1['address'].'</label>,
-								<label style="font-weight: normal;">'.$row3['city'].'</label>,
-								<label style="font-weight: normal;">'.$row3['state'].'</label>,
-								<label style="font-weight: normal;">India</label>,
-								<label style="font-weight: normal;">'.$row1['pincode'].'</label>
-							   </div>
-							   <div style="border-bottom: 1px solid #fac106;">
-									<label>Source Address</label>
-							   </div>
-							   <div style="">';
-
-				echo '
-								<label style="font-weight: normal;">'.$row2['address'].'</label>,
-								<label style="font-weight: normal;">'.$row4['city'].'</label>,
-								<label style="font-weight: normal;">'.$row4['state'].'</label>,
-								<label style="font-weight: normal;">India</label>,
-								<label style="font-weight: normal;">'.$row2['pincode'].'</label>
-							   </div>
-							   <div style="border-bottom: 1px solid #fac106;">
-									<label>Price Quote</label>
-							   </div>
-							   <div style="">
-								<label style="font-weight: normal;">'.$row['price'].' bucks</label>
+							   <div>
+									<label>Price Quote:</label> <i class="fa fa-inr"></i> '.$row['price'].'
 							   </div>
 							</div>
 						  </div>
@@ -894,13 +951,7 @@ function loadOrderModal($link_id){
 					echo '<div style="">No Parcel found</div>';
 				}
 echo '
-				<div style="">
-					<div style=""></div>
-				</div>
-			   </div>
-			   <div style="text-align:center">
 
-			   </div>
 			</div>
 		   </div>
 		</div>

@@ -31,7 +31,7 @@ if($wc_uid){
 	echo '    <div class="container">';
 	checkPageMessages();
 	echo '    </div>';
-	echo '  <div class="container">';/*ravi*/
+	echo '  <div class="container" style="padding-bottom:10px">';/*ravi*/
 	echo '    <h1 class="page-header">My Profile</h1>';
 	$res = runQuery("select * from users where user_id='$wc_uid'");
 	$row = mysqli_fetch_array($res);
@@ -101,7 +101,7 @@ if($wc_uid){
   	}else{
 		echo ' <div role="tabpanel" class="tab-pane fad" id="personal">';
 	}
-	echo '		&nbsp;&nbsp;	';				
+	echo '		&nbsp;&nbsp;';				
 	$file_path_id = "images/".$row['mobile_no']."_".$row['user_id']."_id";
 	$file_path_addr = "images/".$row['mobile_no']."_".$row['user_id']."_address";
 	if(file_exists($file_path_id)){
@@ -238,6 +238,7 @@ if($wc_uid){
 	echo '        </div>';
 	}
 	echo '    </form>';
+	echo '	&nbsp;&nbsp;';	
 	echo '</div>';
 	if(strstr($as_a, "account")){
   		echo ' <div role="tabpanel" class="tab-pane fade in active" id="account">';
@@ -266,9 +267,10 @@ if($wc_uid){
     			</div>
     			<div class="col-xs-4 col-md-2">';
     	echo $row['points'];
+    	loadRedeemModal($row['points']);
     	echo '		</div>
     			<div class="col-xs-4 col-md-2">
-    				<a data-target="#" data-toggle="modal">Redeem</a>
+    				<a data-target="#myModalRedeem" data-toggle="modal">Redeem</a>
     			</div>
     		</div>';
 	echo ' </div>';
@@ -317,7 +319,7 @@ if($wc_uid){
 	if($valid_address){
 		echo '    						<input type="text" id="input_address_label" name="input_address_label" value="'.$row['address_label'].'" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()">';	
 	}else{
-		echo '    						<input type="text" id="input_address_label" name="input_address_label" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()" autofocus>';
+		echo '    						<input type="text" id="input_address_label" name="input_address_label" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()">';
 	}
 	echo '    						<span id="label_status" class="error-status"></span></div>';
 	echo '    						<div style="margin-top: 5px;" class="ui-widget">';

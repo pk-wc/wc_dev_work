@@ -95,11 +95,11 @@ if($wc_uid){
 	if(isset($_GET['jid'])){
 		$journey_id = mres_ss($_GET['jid']);
 	}
-	echo '  <div class="container">';/*ravi*/
-	echo '<h1 class="page-header">My Requests</h1>';
-	echo '	<div style="">';
+	echo '<div class="container" style="padding-bottom:10px">';/*ravi*/
+	
+	echo '   <h1 class="page-header">My Requests</h1>';
 	if($order_id){
-		$res = runQuery("select * from orders where order_id='$order_id' and delivery_date >= '".date('Y-m-d')."'");
+		$res = runQuery("select * from orders where order_id='$order_id'");
 		if($res && mysqli_num_rows($res)){
 			echo '<div class="row" style="z-index:10;border:1px solid #eee;box-shadow: 0 2px 5px black;border-radius: 5px;margin-bottom:10px;padding-top:10px">';
 			$row = mysqli_fetch_array($res);
@@ -240,7 +240,7 @@ if($wc_uid){
 			checkPageMessages();
 		}
 	}else if($journey_id){
-		$res = runQuery("select * from journeys where journey_id='$journey_id' and journey_date >= '".date('Y-m-d')."'");
+		$res = runQuery("select * from journeys where journey_id='$journey_id'");
 		if($res && mysqli_num_rows($res)){
 			echo '<div class="row" style="z-index:10;border:1px solid #eee;box-shadow: 0 2px 5px black;border-radius: 5px;margin-bottom:10px;padding-top:10px">';
 			$row = mysqli_fetch_array($res);
@@ -371,7 +371,6 @@ if($wc_uid){
 			checkPageMessages();
 		}
 	}
-	echo '	</div>';
 	
 	$as_a = "carrier";
 	if(isset($_GET['as_a'])){
@@ -387,12 +386,10 @@ if($wc_uid){
 	if(isset($_GET['status'])){
 		$status = mres_ss($_GET['status']);
 	}
-	echo '	<div style="border: 1px solid #009688">';
-	echo '		<div style="border-bottom: 1px solid #009688">';
-	echo '			<ul class="nav nav-tabs" role="tablist" style="text-align: center;">';
-	$q = "select * from requests where is_carrier='1' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."')".
+	echo '		<ul class="nav nav-tabs" role="tablist" style="text-align: center;">';
+	$q = "select * from requests where is_carrier='1' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid')".
 	     " union ".
-	     "select * from requests where is_carrier='1' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."')";
+	     "select * from requests where is_carrier='1' and order_id in (select order_id from order_sender where user_id='$wc_uid')";
 	$res = runQuery($q);
 	$no_of_requests = 0;
 	if($res){
@@ -410,9 +407,9 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
 
-	$q = "select * from requests where is_carrier='0' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."')".
+	$q = "select * from requests where is_carrier='0' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid')".
 	     " union ".
-	     "select * from requests where is_carrier='0' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."')";
+	     "select * from requests where is_carrier='0' and order_id in (select order_id from order_sender where user_id='$wc_uid')";
 	$res = runQuery($q);
 	$no_of_requests = 0;
 	if($res){
@@ -430,14 +427,13 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
 	echo '			</ul>';
-	echo '		</div>';
 
 	echo '		<div style="border-bottom: 1px solid #009688; padding: 5px 2px 5px 2px;">';
 	echo '			<ul class="nav nav-pills" role="tablist" style="text-align: center;">';
 	
-	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='in-progress')".
+	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='in-progress')".
 	     " union ".
-	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='in-progress')";
+	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='in-progress')";
 	$res = runQuery($q);
 	$no_of_requests = 0;
 	if($res){
@@ -455,9 +451,9 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
     
-    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='accepted')".
+    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='accepted')".
          " union ".
-         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='accepted')";
+         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='accepted')";
     $res = runQuery($q);
     $no_of_requests = 0;
     if($res){
@@ -475,9 +471,9 @@ if($wc_uid){
 	echo '					</a>';
 	echo '				</li>';
 
-    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='declined')".
+    $q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='declined')".
          " union ".
-         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='declined')";
+         "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='declined')";
     $res = runQuery($q);
     $no_of_requests = 0;
     if($res){
@@ -499,9 +495,9 @@ if($wc_uid){
 	echo '		</div>';
 
 	echo '		<div style="">';
-	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid' and journey_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='$status')".
+	$q = "select * from requests where is_carrier='$is_carrier' and journey_id in (select journey_id from carrier_journeys where user_id='$wc_uid') and status_id in (select status_id from status where status='$status')".
 	     " union ".
-	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid' and delivery_date >= '".date('Y-m-d')."') and status_id in (select status_id from status where status='$status')";
+	     "select * from requests where is_carrier='$is_carrier' and order_id in (select order_id from order_sender where user_id='$wc_uid') and status_id in (select status_id from status where status='$status')";
 	$res = runQuery($q);
 	if($res && mysqli_num_rows($res)){
 		while($row = mysqli_fetch_array($res)){
@@ -725,6 +721,7 @@ if($wc_uid){
 }else{
 header("location: index.php");
 }
+echo ' </div>';
 echo ' </div>';
 showFooter();
 

@@ -85,11 +85,11 @@ if($wc_uid){
 		$eid = mres_ss($_GET['eid']);
 	}
 	$valid_order = false;
-	echo ' <div class="container">';/*ravi*/
+	echo ' <div class="container" style="padding-bottom:10px">';/*ravi*/
 	echo ' <h1 class="page-header">My Parcels</h1>';
 	echo ' <div class="row" style="">';
 	checkPageMessages();
-	
+
 	if($eid){
 		$valid_order = false;
 		$res = runQuery("select * from orders where order_id='$eid' and order_id in (select order_id from order_sender where user_id='$wc_uid') ".
@@ -121,7 +121,7 @@ if($wc_uid){
 		echo '		<div class="panel-body panel-collapse collapse in" id="pContent">';
 		}else{
 		echo '		<div class="panel-heading clickable" data-toggle="collapse" data-target="#pContent" id="pTiltle" style="cursor: pointer;text-align:center">';
-		
+
 		echo '			<h3 class="panel-title">Add New Parcel</h3>';
 		echo '                  	<span class="pull-right "><i class="glyphicon glyphicon-plus"></i></span>
 				</div>';
@@ -131,7 +131,7 @@ if($wc_uid){
 	if($valid_order){
 		echo '			<form class="form-signin" onsubmit="return updateParcels()">';
 	}else{
-	
+
 		echo '			<form class="form-signin" onsubmit="return userParcels()">';
 	}
 	echo '					<div class="row" style="border-bottom: 1px solid #009688; padding-bottom: 4px;">
@@ -164,7 +164,7 @@ if($wc_uid){
 	echo '							<div style="border-bottom: 1px solid #fac106; font-weight: bold; padding-bottom: 5px; ">Delivery Address</div>';
 	echo '							<div style="">';
 	echo '								<button id="deliveryAddressLink" style="padding: 0px; margin-top: 4px;" type="button" class="btn btn-link" data-target="#myModalDeliveryAddress" data-toggle="modal">';
-	
+
 	if($valid_order){
 		$res1 = runQuery("select address_label from address where address_id='".$row['delivery_address_id']."'");
 		if($res1 && mysqli_num_rows($res1)){
@@ -195,7 +195,7 @@ if($wc_uid){
 	echo '										<label for="inputDate" class="sr-only">Delivery Date</label>';
 	if($valid_order){
 		echo '									<input type="text" id="datepicker" name="input_delivery_date" value="'.$row['delivery_date'].'" class="form-control" placeholder="Enter Delivery Date">';
-		
+
 	}else{
 		echo '									<input type="text" id="datepicker" name="input_delivery_date" class="form-control" placeholder="Enter Delivery Date">';
 	}
@@ -352,7 +352,7 @@ if($wc_uid){
 			echo '						<div style="margin-top:5px">
 										<a href="myDashboard.php?as_a=carrier&input_order_source_pincode_search='.$source_pincode.'&input_order_destination_pincode_search='.$destination_pincode.'"<button type="button" style="width: 100%;" class="btn btn-primary">Find a weCarrier</button></a>
 									</div>';
-									
+
 			echo '			</div>';
 			echo '		</div>';
 			echo '	</div>';
