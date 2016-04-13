@@ -19,7 +19,7 @@ loadCSSFiles();
 loadJSFiles();
 echo '
 		<script>
-			
+
 			function deleteAddress(aid){
 				if(confirm("Are you sure you want to delete this Address?")){
 					window.location.href = "deleteAddress.php?aid=" + aid;
@@ -58,7 +58,7 @@ if($wc_uid){
 			checkPageMessages();
 		}
 	}
-	
+
 	echo '    <div class="row">';
 	echo '    	<div class="col-md-4 col-lg-4 col-sm-4 col-xs-12" style="z-index:10;border:1px solid #eee;box-shadow: 0 2px 5px black;border-radius: 5px;">';
 	if($valid_address){
@@ -78,9 +78,9 @@ if($wc_uid){
 	echo '    						<div style="margin-top: 5px;">';
 	echo '    							<label for="inputText" class="sr-only">Label</label>';
 	if($valid_address){
-		echo '    						<input type="text" id="input_address_label" name="input_address_label" value="'.$row['address_label'].'" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()">';	
+		echo '    						<input type="text" id="input_address_label" name="input_address_label" value="'.$row['address_label'].'" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()">';
 	}else{
-		echo '    						<input type="text" id="input_address_label" name="input_address_label" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()" autofocus>';
+		echo '    						<input type="text" id="input_address_label" name="input_address_label" class="form-control" placeholder="Enter Address Label" onblur="return checklabel()">';
 	}
 	echo '    						<span id="label_status" class="error-status"></span></div>';
 	echo '    						<div style="margin-top: 5px;" class="ui-widget">';
@@ -90,7 +90,7 @@ if($wc_uid){
 	}else{
 		echo '    						<input type="text" id="input_pincode" name="input_pincode" class="form-control" placeholder="Enter Pincode" onkeyup="fillAddress()" onblur="checkpincode()" autocomplete="off">';
 	}
-	
+
 	echo '    						<span id="pincode_status" class="error-status"></span></div>';
 	echo '    						<div style="margin-top: 5px;">';
 	echo '    							<div class="form-group">';

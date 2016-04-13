@@ -481,7 +481,7 @@ $(document).ready(function(){
 $( "#contactForm" ).submit(function( event ) {
 	var formData = {
 		"name" : $("input[name=name]").val(),
-		"email" : $("input[name=email]").val(),
+		"email" : $("input[name=email_id]").val(),
 		"phone" : $("input[name=phone]").val(),
 		"message" : $("textarea[name=message]").val(),
 	};
@@ -495,16 +495,16 @@ $( "#contactForm" ).submit(function( event ) {
 	}
 
 	if(!formData["email"]){
-		$("#email").parent().addClass("bottom-error");
-		$("#email_status").html("Email address is required.");
+		$("#email_id").parent().addClass("bottom-error");
+		$("#email_id_status").html("Email Address is required.");
 	}else{
-		$("#email").removeClass("bottom-error");
-		$("#email_status").empty();
+		$("#email_id").removeClass("bottom-error");
+		$("#email_id_status").empty();
 	}
 
 	if(!formData["phone"]){
 		$("#phone").parent().addClass("bottom-error");
-		$("#phone_status").html("Mobile number is required.");
+		$("#phone_status").html("Mobile Number is required.");
 	}else{
 		$("#phone").removeClass("bottom-error");
 		$("#phone_status").empty();
@@ -518,7 +518,7 @@ $( "#contactForm" ).submit(function( event ) {
 		$("#message_status").empty();
 	}
 
-	if(!$("#name_status").html() && !$("#email_status").html() && !$("#phone_status").html() && !$("#message_status").html()){
+	if(!$("#name_status").html() && !$("#email_id_status").html() && !$("#phone_status").html() && !$("#message_status").html()){
 		$.ajax({
 			type        : "POST",
 			url         : "userMessage.php",

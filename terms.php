@@ -118,7 +118,6 @@ echo '  <div id="terms"><h1 style="text-align:center">Terms & Conditions</h1>
                                      <ul class="text-justify" style="font-size: 14px;font-weight:normal;padding-bottom:5px">User can choose to have various options for redeeming the WEpoints like,
 <ul style="font-size: 14px;font-weight:normal;padding-bottom:5px">Direct transfer to your bank account (for that you have to provide your account details where you want to transfer).</ul>
                <ul style="font-size: 14px;font-weight:normal;padding-bottom:5px">Transfer to your PayTM wallet if you have PayTM wallet activated on your registered mobile number.</ul>
-               <ul style="font-size: 14px;font-weight:normal;padding-bottom:5px">Transfer to PayUMoney wallet (you need to provide necessary information for transferring to respective PayUMoney account).</ul>
                <ul style="font-size: 14px;font-weight:normal">Any other options updated time to time.</ul>
 
                                      </ul>

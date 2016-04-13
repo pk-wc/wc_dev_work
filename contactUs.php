@@ -54,10 +54,10 @@ echo '<section id="contact">
                         <div class="row">
                             <div class="form-group col-xs-12 floating-label-form-group">
                                 <label for="email">Email Address</label>
-                                <input type="email" class="form-control" placeholder="Email Address" id="email" name="email">
+                                <input type="email" class="form-control" placeholder="Email Address" id="email_id" name="email_id">
                             </div>
                             <div class="col-xs-12">
-                       	    	<span id="email_status" class="error-status"></span>
+                       	    	<span id="email_id_status" class="error-status"></span>
                        	    </div>
                         </div>
                         <div class="row">
@@ -91,7 +91,7 @@ echo '<section id="contact">
             </div>
         </div>
      </section>';
-echo '</div>';    
+echo '</div>';
 showFooter();
 loadLaterJSFiles();
 echo '  </body>';

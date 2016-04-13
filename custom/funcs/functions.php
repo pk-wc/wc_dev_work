@@ -587,7 +587,7 @@ function loadLoginModal(){
 					  	<ul class="nav nav-tabs" role="tablist" style="width:100%;">
 					    	<li role="presentation" style="width:31%" class="active"><a href="#signin" aria-controls="signin" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-sign-in"></i></span>Sign In</a></li>
 					    	<li role="presentation" style="width:33%"><a href="#signup" aria-controls="signup" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-pencil-square-o"></i></span>Sign Up</a></li>
-					    	<li role="presentation" style="width:36%"><a href="#forget" aria-controls="forget" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-lock"></i></span>Forget Password</a></li>
+					    	<li role="presentation" style="width:36%"><a href="#forget" aria-controls="forget" role="tab" data-toggle="tab"><span style="margin-right:5px;"><i class="fa fa-lock"></i></span>Password</a></li>
 					  	</ul>
 
 					 	<div class="tab-content">
@@ -732,7 +732,7 @@ function loadLoginModal(){
 								              </div>
 								              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="forget_email_status" class="error-status"></span></div>
 								              <div class="text-left" style="margin-top:-10px;padding-bottom:10px;"><span id="forget_submit_status" class="error-status"></span></div>
-							              	      <button class="btn btn-lg btn-primary btn-block" type="submit">Forget Password</button>
+							              	      <button class="btn btn-lg btn-primary btn-block" type="submit">Reset Password</button>
 						            		</div>
 						            		</form>
 						            		<form class="form-signin" id="otpform">
